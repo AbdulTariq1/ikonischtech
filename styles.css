@@ -1,0 +1,46 @@
+/* Global Font */
+body { font-family: 'Inter', sans-serif; }
+
+/* Custom Colors */
+:root {
+    --color-primary: #dc2626;
+    --color-secondary: #facc15;
+    --color-dark: #1f2937;
+    --color-light: #f9fafb;
+}
+
+.text-red { color: var(--color-primary); }
+.bg-red { background-color: var(--color-primary); }
+.text-yellow { color: var(--color-secondary); }
+.bg-yellow { background-color: var(--color-secondary); }
+.bg-dark { background-color: var(--color-dark); }
+
+/* Button styling */
+.btn-cta {
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+}
+.btn-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.6);
+}
+
+/* Loading spinner */
+.spinner {
+    border-top-color: #facc15;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Time slot hover */
+.time-slot:not(.bg-red):hover {
+    background-color: #facc151a;
+}
+
+/* Calendar hover */
+#calendar-grid > div:not(.bg-red):not(.bg-gray-700\/50):hover {
+    background-color: #dc26261a;
+}
