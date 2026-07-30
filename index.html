@@ -1,366 +1,519 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>IKONISCH TECH | White-Label Scaling Partner for Agencies</title>
-
-    <!-- Tailwind -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKÓNISCH TECH | High-Ticket Local Acquisition & RevOps</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#ef4444',
+                            redAccent: '#ff0500',
+                            redDark: '#dc2626',
+                            bgDark: '#09090b',
+                            cardDark: '#121215',
+                            borderDark: '#27272a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Calendly Widget Assets -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="assets/css/styles.css">
-
-    <!-- SEO -->
-    <meta name="description" content="Scale your agency to 7-figures with IKONISCH TECH — a white-label execution engine for B2B, HVAC, Dental & E-commerce agencies.">
-
-    <!-- Social Sharing -->
-    <meta property="og:title" content="IKONISCH TECH — White-Label Scaling Partner">
-    <meta property="og:description" content="Predictable white-label delivery for your agency.">
-    <meta property="og:type" content="website">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #09090b;
+            color: #f4f4f5;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff0500;
+        }
+        .glass-card {
+            background: rgba(18, 18, 21, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .text-gradient-red {
+            background: linear-gradient(135deg, #f87171 0%, #ff0500 50%, #dc2626 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
 </head>
+<body class="selection:bg-red-600 selection:text-white antialiased">
 
-<body class="text-gray-800 bg-white antialiased">
+    <!-- Urgency Top Banner -->
+    <div class="bg-gradient-to-r from-red-950 via-zinc-950 to-red-950 border-b border-red-900/40 text-center py-2 px-4 text-xs font-semibold uppercase tracking-widest text-red-400 relative z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-center space-x-2">
+            <span class="inline-block h-2 w-2 rounded-full bg-red-500 animate-ping"></span>
+            <span>Territory Limit: Max 3 Firms per Region. <span class="text-white underline decoration-red-500 underline-offset-2 hidden sm:inline">1 Spot Available</span></span>
+        </div>
+    </div>
 
-    <!-- HEADER -->
-    <header class="shadow-xl sticky top-0 bg-white z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <a href="#" class="flex items-center space-x-2">
-                    <div class="w-8 h-8 bg-red rounded-lg flex items-center justify-center font-extrabold text-white text-xl">IT</div>
-                    <span class="font-bold text-2xl tracking-tight text-gray-900">
-                        IKONISCH <span class="text-red">TECH</span>
-                    </span>
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-zinc-950/90 backdrop-blur-xl border-b border-zinc-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2 group">
+                <span class="text-2xl font-black tracking-tight text-white uppercase font-sans">
+                    IKÓNISCH <span class="text-[#ff0500]">TECH</span>
+                </span>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-xs uppercase font-bold tracking-wider text-zinc-400">
+                <a href="#hero-section" class="hover:text-white transition-colors">Book Call</a>
+                <a href="#founder-section" class="hover:text-white transition-colors">About Founder</a>
+                <a href="#testimonials-section" class="hover:text-white transition-colors">Client Testimonials</a>
+                <a href="#faq-section" class="hover:text-white transition-colors">FAQ</a>
+            </nav>
+
+            <!-- Navigation CTA -->
+            <div class="flex items-center space-x-3">
+                <a href="#hero-section" class="py-2.5 px-4 bg-[#ff0500] hover:bg-red-700 text-white font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(255,5,0,0.4)]">
+                    Schedule Strategy Call
                 </a>
-
-                <nav class="hidden md:flex space-x-8 items-center text-sm font-medium">
-                    <a href="#calculator" class="text-gray-600 hover:text-red">Profit Calculator</a>
-                    <a href="#aigenerator" class="text-gray-600 hover:text-red">AI Value Generator</a>
-                    <a href="#booking-consultation" class="text-gray-600 hover:text-red">Book Consultation</a>
-                    <a href="#booking-consultation" class="bg-red text-white px-5 py-2 rounded-full font-semibold btn-cta">
-                        Start Your Scale
-                    </a>
-                </nav>
             </div>
         </div>
     </header>
 
-    <!-- HERO -->
-    <section class="pt-24 pb-36 bg-dark text-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center max-w-4xl mx-auto">
-                <p class="uppercase text-yellow font-bold mb-3 tracking-widest">The Agency Scaling Engine</p>
-                <h1 class="text-5xl sm:text-6xl font-extrabold mb-6 leading-tight">
-                    Scale to <span class="text-red">7-Figures</span> with Predictable White-Label Execution
+    <!-- Hero Section -->
+    <main id="hero-section" class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-16">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            <!-- Left Column: Core Value Proposition -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <div class="inline-flex items-center space-x-2 px-3 py-1 bg-red-950/40 rounded-full border border-red-500/30 text-xs font-semibold tracking-wider text-red-400 uppercase">
+                    <i class="fa-solid fa-layer-group text-[10px]"></i>
+                    <span>Law Firms • Real Estate • Construction • Gyms</span>
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+                    Scale your local market dominance and add $100k+ in contract value.
                 </h1>
-                <p class="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
-                    Stop worrying about hiring, training, and overhead. IKONISCH TECH provides turnkey delivery for your B2B, HVAC, Dental, and E-commerce clients.
+
+                <p class="text-base sm:text-lg text-zinc-300 leading-relaxed">
+                    We deploy automated RevOps response systems and localized paid ad campaigns engineered to capture high-value contracts without cold outreach or shared lead platforms.
                 </p>
-                <a href="#calculator" class="bg-red text-white px-10 py-4 rounded-full font-bold text-lg btn-cta">
-                    Calculate Your Profit Jump →
-                </a>
-            </div>
-        </div>
-    </section>
 
-    <!-- PROFIT CALCULATOR -->
-    <section id="calculator" class="py-24 bg-gray-100">
-        <div class="max-w-7xl mx-auto px-4">
-
-            <div class="text-center mb-16">
-                <p class="uppercase text-red font-semibold mb-2">The Predictable Path</p>
-                <h2 class="text-4xl font-bold text-gray-900">White-Label Profit Calculator</h2>
-                <p class="text-lg text-gray-500 mt-2">See exactly how much you save and gain by outsourcing development and execution to us.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-12 bg-white p-10 rounded-xl shadow-2xl border-t-8 border-red/50">
-
-                <!-- INPUTS -->
-                <div class="space-y-6">
-                    <h3 class="text-2xl font-bold text-gray-800 border-b pb-3 flex items-center">
-                        <span class="text-red mr-3 text-2xl">📊</span> Input Your Current Metrics
-                    </h3>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Number of Active Clients Needing Execution</label>
-                        <input type="number" id="clients" value="5" class="w-full p-3 rounded-lg border focus:ring-red" oninput="calculateProfit()">
+                <!-- Key Benefits -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs sm:text-sm text-zinc-300">
+                    <div class="flex items-center space-x-3 bg-zinc-900/70 p-3.5 rounded-xl border border-zinc-800/80">
+                        <i class="fa-solid fa-bolt text-[#ff0500] text-sm"></i>
+                        <span>Sub-2 minute automated CRM response so leads never go cold.</span>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Average Monthly Revenue per Client ($)</label>
-                        <input type="number" id="revenue" value="2500" class="w-full p-3 rounded-lg border focus:ring-red" oninput="calculateProfit()">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Current Internal Management Overhead per Client ($)</label>
-                        <input type="number" id="managementOverhead" value="400" class="w-full p-3 rounded-lg border focus:ring-red" oninput="calculateProfit()">
-                    </div>
-
-                    <div class="pt-4 border-t">
-                        <label class="block text-sm font-medium text-gray-700 mb-3">Select IKONISCH Plan</label>
-                        <div class="space-y-3">
-
-                            <label class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border">
-                                <input type="radio" name="ikonischPlan" value="2999" data-clients="3" checked onchange="calculateProfit()">
-                                <span class="font-semibold text-gray-800">Starter Engine: $2,999/mo (Up to 3 Clients)</span>
-                            </label>
-
-                            <label class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border">
-                                <input type="radio" name="ikonischPlan" value="5999" data-clients="6" onchange="calculateProfit()">
-                                <span class="font-semibold text-gray-800">Growth Accelerator: $5,999/mo (Up to 6 Clients)</span>
-                            </label>
-
-                            <label class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border">
-                                <input type="radio" name="ikonischPlan" value="9999" data-clients="10" onchange="calculateProfit()">
-                                <span class="font-semibold text-gray-800">Enterprise Base: $9,999/mo (Up to 10 Clients)</span>
-                            </label>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!-- RESULTS -->
-                <div class="space-y-6 bg-gray-800 p-8 rounded-xl text-white border border-red/50">
-
-                    <h3 class="text-2xl font-bold border-b border-gray-700 pb-3 flex items-center text-yellow">
-                        <span class="text-yellow mr-3 text-2xl">🚀</span> Your IKONISCH Impact Analysis
-                    </h3>
-
-                    <div class="p-3 rounded-lg bg-red-700/30 border-2 border-red-500">
-                        <p class="text-sm text-yellow font-medium mb-1">Cost Comparison</p>
-
-                        <div class="flex justify-between text-xl font-bold">
-                            <p>Your Internal Execution Cost/Client:</p>
-                            <p id="trueExecutionCost" class="text-red-400">$1,388</p>
-                        </div>
-
-                        <div class="flex justify-between text-xl font-bold mt-2">
-                            <p>IKONISCH Execution Cost/Client:</p>
-                            <p id="ikonischCostPerClient" class="text-yellow">$999</p>
-                        </div>
-
-                        <p id="costSavingsLine" class="text-xs text-gray-400 mt-2 text-center">
-                            You save $389 per client immediately.
-                        </p>
-                    </div>
-
-                    <div class="p-3 rounded-lg bg-gray-700">
-                        <p class="text-sm text-gray-400 mb-1">Current Monthly Net Profit</p>
-
-                        <div class="flex justify-between">
-                            <p id="currentProfit" class="text-3xl font-extrabold text-red">$3,860</p>
-                            <p class="text-xs text-gray-400">($<span id="totalRevenueSmall">12,500</span> - $<span id="totalOverheadSmall">8,640</span>)</p>
-                        </div>
-                    </div>
-
-                    <div class="p-3 rounded-lg bg-red-700/30 border-2 border-red-500">
-                        <p class="text-sm text-yellow mb-1">Projected Net Profit</p>
-
-                        <div class="flex justify-between">
-                            <p id="newProfit" class="text-4xl font-extrabold text-yellow">$9,501</p>
-                            <p class="text-xs text-gray-300">
-                                ($<span id="totalRevenueProjectedSmall">12,500</span> - $<span id="ikonischCostSmall">2,999</span>)
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="pt-4 text-center border-t border-gray-700">
-                        <p id="profitDifference" class="text-xl font-bold">
-                            Your profit increases by $3,001 per month.
-                        </p>
-                    </div>
-
-                    <div id="recommendation-box" class="mt-8 p-4 rounded-lg bg-yellow/20 border-l-4 border-yellow text-gray-100">
-                        <p class="text-lg font-bold text-yellow mb-2">💡 Recommended Plan: Growth Accelerator</p>
-
-                        <p id="recommendation-text" class="text-sm">
-                            Based on your 5 clients, the Growth Accelerator plan provides sufficient capacity and maximizes net profit.
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- AI VALUE GENERATOR -->
-    <section id="aigenerator" class="py-24 bg-dark text-white">
-        <div class="max-w-7xl mx-auto px-4">
-
-            <div class="text-center mb-16">
-                <p class="uppercase text-yellow font-semibold">Powered by Gemini AI</p>
-                <h2 class="text-4xl font-bold">Instantly Generate Your Scaling Headline</h2>
-                <p class="text-lg text-gray-400">
-                    See how quickly you can market new services when IKONISCH handles delivery.
-                </p>
-            </div>
-
-            <div class="max-w-4xl mx-auto bg-gray-800 p-8 rounded-xl border-t-4 border-yellow">
-
-                <div class="grid md:grid-cols-3 gap-4 mb-6">
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-300 mb-1">Target Niche</label>
-                        <input id="nicheInput" type="text" value="High-End E-commerce" class="w-full p-3 rounded-lg bg-gray-700 text-white border-gray-700">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-1">Service to Scale</label>
-                        <input id="serviceInput" type="text" value="Custom CRM Development" class="w-full p-3 rounded-lg bg-gray-700 text-white border-gray-700">
-                    </div>
-                </div>
-
-                <button onclick="generateValueProp()" class="w-full bg-red text-white font-extrabold py-3 rounded-lg text-lg btn-cta">
-                    Generate My Value Prop
-                </button>
-
-                <div class="mt-8 bg-gray-900 p-6 rounded-lg border border-gray-700">
-                    <p class="text-sm font-medium text-yellow mb-2">Generated Headline:</p>
-
-                    <div id="propOutput" class="text-2xl font-extrabold text-white min-h-[50px] text-center">
-                        Input your details and click generate.
-                    </div>
-
-                    <div id="loadingIndicator" class="hidden text-center mt-2">
-                        <div class="spinner w-6 h-6 border-4 border-gray-500 rounded-full inline-block"></div>
-                        <span class="ml-2 text-gray-400">Generating...</span>
-                    </div>
-
-                    <div id="errorIndicator" class="hidden text-center mt-2 p-2 bg-red-800/50 text-red-300 rounded-lg">
-                        Error generating copy. Check API key.
+                    <div class="flex items-center space-x-3 bg-zinc-900/70 p-3.5 rounded-xl border border-zinc-800/80">
+                        <i class="fa-solid fa-shield-halved text-[#ff0500] text-sm"></i>
+                        <span>Enforced territory exclusivity with a maximum of 3 firms per region.</span>
                     </div>
                 </div>
 
             </div>
 
-        </div>
-    </section>
+            <!-- Right Column: Lead Form & Calendly Widget -->
+            <div class="lg:col-span-5 bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl relative">
+                
+                <!-- STEP 1: Direct Contact Form -->
+                <div id="top-right-form-wrapper" class="space-y-5">
+                    <div class="space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs uppercase font-extrabold tracking-widest text-[#ff0500]">Step 1 of 2</span>
+                            <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        </div>
+                        <h2 class="text-2xl font-black text-white">Reserve Your Strategy Call</h2>
+                        <p class="text-xs text-zinc-400">Fill details below to open live calendar availability.</p>
+                    </div>
 
-    <!-- BOOKING SECTION -->
-    <section id="booking-consultation" class="py-24 bg-gray-100">
-        <div class="max-w-7xl mx-auto px-4">
+                    <form id="lead-capture-form" class="space-y-4" onsubmit="handleFormSubmit(event)">
+                        <div>
+                            <label class="block text-[11px] uppercase font-bold tracking-wider text-zinc-300 mb-1">Full Name</label>
+                            <input type="text" id="user_name" placeholder="Johnathan Doe" class="w-full bg-zinc-950 border border-zinc-800 text-sm text-white rounded-xl px-4 py-3 outline-none focus:border-[#ff0500] transition-colors" required>
+                        </div>
 
-            <div class="text-center mb-16">
-                <p class="uppercase text-red font-semibold">Next Step: Capacity Mapping</p>
-                <h2 class="text-4xl font-bold">Book Your 30-Minute Partnership Consultation</h2>
-            </div>
+                        <div>
+                            <label class="block text-[11px] uppercase font-bold tracking-wider text-zinc-300 mb-1">Business Email</label>
+                            <input type="email" id="user_email" placeholder="john@firm.com" class="w-full bg-zinc-950 border border-zinc-800 text-sm text-white rounded-xl px-4 py-3 outline-none focus:border-[#ff0500] transition-colors" required>
+                        </div>
 
-            <div class="grid lg:grid-cols-5 gap-8">
+                        <div>
+                            <label class="block text-[11px] uppercase font-bold tracking-wider text-zinc-300 mb-1">Mobile Phone Number</label>
+                            <input type="tel" id="user_phone" placeholder="+1 (555) 000-0000" class="w-full bg-zinc-950 border border-zinc-800 text-sm text-white rounded-xl px-4 py-3 outline-none focus:border-[#ff0500] transition-colors" required>
+                        </div>
 
-                <!-- FORM -->
-                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-2xl border-t-4 border-red/30 space-y-6">
-
-                    <h3 class="text-2xl font-bold text-gray-800 border-b pb-3">Your Contact Details</h3>
-
-                    <form id="booking-form" class="space-y-4">
-
-                        <input type="text" placeholder="Your Full Name (Required)" required class="w-full bg-gray-50 p-3 rounded-lg border">
-
-                        <input type="email" placeholder="Work Email (Required)" required class="w-full bg-gray-50 p-3 rounded-lg border">
-
-                        <input type="tel" placeholder="Phone Number (Required)" required class="w-full bg-gray-50 p-3 rounded-lg border">
-
-                        <input type="text" placeholder="Agency Website URL (Required)" required class="w-full bg-gray-50 p-3 rounded-lg border">
-
-                        <select required class="w-full bg-gray-50 p-3 rounded-lg border">
-                            <option value="" disabled selected>Current Monthly Revenue</option>
-                            <option value="under10k">Under $10,000</option>
-                            <option value="10k-30k">$10,000 - $30,000</option>
-                            <option value="30k-60k">$30,000 - $60,000</option>
-                            <option value="60k+">$60,000+</option>
-                        </select>
-
+                        <button type="submit" class="w-full py-3.5 px-4 bg-[#ff0500] hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-[0_0_20px_rgba(255,5,0,0.4)] flex items-center justify-center space-x-2">
+                            <span>Continue to Calendar Booking</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
                     </form>
 
-                    <div class="p-4 bg-gray-800 text-white rounded-lg">
-                        <p class="text-sm font-semibold text-yellow">Your Selected Time:</p>
-
-                        <p class="text-xl font-bold">
-                            <span id="booking-review-date">---</span> 
-                            at 
-                            <span id="booking-review-time">---</span>
-                        </p>
-
-                        <p class="text-xs text-gray-400 mt-1">
-                            Time Zone: <span id="local-timezone-display">Loading...</span>
-                        </p>
+                    <!-- Direct Calendar Access -->
+                    <div class="text-center pt-2 border-t border-zinc-800/80">
+                        <button onclick="showCalendarDirectly()" class="text-xs text-zinc-400 hover:text-white transition-colors underline underline-offset-2">
+                            Or open calendar directly without prefilling
+                        </button>
                     </div>
-
-                    <button id="bookButton" onclick="handleBookingSubmit()" class="w-full bg-red text-white font-extrabold py-3 rounded-lg text-lg btn-cta">
-                        Secure My 30-Minute Scale Roadmap
-                    </button>
-
-                    <div id="booking-success" class="hidden mt-4 p-4 bg-green-700 text-white rounded-lg">
-                        <p class="font-bold">Roadmap Secured!</p>
-                    </div>
-
-                    <div id="booking-error" class="hidden mt-4 p-4 bg-red-700 text-white rounded-lg">
-                        <p class="font-bold">Error!</p>
-                        <p>Please complete the form and select a time.</p>
-                    </div>
-
                 </div>
 
-                <!-- CALENDAR -->
-                <div class="lg:col-span-3 bg-gray-800 p-8 rounded-xl shadow-2xl border-t-4 border-yellow grid md:grid-cols-2 gap-8">
-
-                    <!-- LEFT: CALENDAR -->
-                    <div>
-                        <h4 class="text-xl font-bold text-yellow mb-4">1. Select Day</h4>
-
-                        <div class="flex justify-between items-center mb-4 text-white">
-                            <button onclick="changeMonth(-1)" class="p-2 rounded-full hover:bg-gray-700">&larr;</button>
-
-                            <h3 id="month-title" class="font-semibold text-lg"></h3>
-
-                            <button onclick="changeMonth(1)" class="p-2 rounded-full hover:bg-gray-700">&rarr;</button>
+                <!-- STEP 2: Embedded Calendly Widget Container -->
+                <div id="booking-container" class="hidden space-y-4">
+                    <div class="flex justify-between items-center pb-2 border-b border-zinc-800">
+                        <div>
+                            <span class="text-xs uppercase font-extrabold tracking-widest text-emerald-400">Step 2 of 2</span>
+                            <h3 class="text-base font-bold text-white">Select Consultation Time</h3>
                         </div>
-
-                        <div class="grid grid-cols-7 text-xs font-semibold text-center text-gray-400 mb-2">
-                            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
-                        </div>
-
-                        <div id="calendar-grid" class="grid grid-cols-7 gap-2"></div>
+                        <button onclick="resetFormView()" class="text-[11px] text-zinc-400 hover:text-white underline">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Edit Details
+                        </button>
                     </div>
 
-                    <!-- RIGHT: TIME -->
-                    <div class="border-l border-gray-700 pl-4">
-                        <h4 class="text-xl font-bold text-yellow mb-2">2. Select Time</h4>
-
-                        <p class="text-sm text-gray-400 mb-4">
-                            Availability for <span id="selected-date-display">Date not selected</span>
-                        </p>
-
-                        <div id="time-slot-column" class="space-y-3 max-h-[300px] overflow-y-auto pr-2">
-                            <p class="text-gray-400 text-sm p-4">Select a day to view available times.</p>
-                        </div>
-                    </div>
-
+                    <!-- Dynamic Calendly Mount Point -->
+                    <div id="calendly-embed-slot" class="w-full rounded-xl overflow-hidden bg-zinc-950 min-h-[600px]"></div>
                 </div>
 
             </div>
 
         </div>
+    </main>
+
+    <!-- Founder Section -->
+    <section id="founder-section" class="border-t border-zinc-900 bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 py-16 px-4 sm:px-6 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-zinc-900/90 border border-zinc-800 rounded-3xl p-6 sm:p-10 relative overflow-hidden shadow-2xl">
+                
+                <!-- Glow elements -->
+                <div class="absolute -top-24 -left-24 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-red-900/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                    
+                    <!-- Founder Image Container -->
+                    <div class="lg:col-span-5 relative">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-red-600/30 via-red-900/20 to-zinc-800 rounded-3xl blur-lg opacity-70"></div>
+                        
+                        <div class="relative mx-auto max-w-sm rounded-2xl overflow-hidden border border-zinc-700/80 bg-zinc-950 shadow-2xl group">
+                            <div class="aspect-[4/5] w-full bg-zinc-950 relative overflow-hidden flex items-center justify-center">
+                                
+                                <img src="ChatGPT Image Jul 17, 2026, 11_15_20 AM.png" 
+                                     alt="Founder & Lead RevOps Architect" 
+                                     onerror="this.onerror=null; this.src='ChatGPT Image Jul 18, 2026, 09_11_15 PM.png';" 
+                                     class="w-full h-full object-cover object-top filter contrast-[1.05] brightness-95 group-hover:scale-105 transition-transform duration-700 ease-out">
+                                
+                                <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent opacity-90"></div>
+                                
+                                <div class="absolute bottom-0 inset-x-0 z-10 text-center p-6">
+                                    <span class="inline-block px-3 py-1 bg-red-500/20 backdrop-blur-md border border-red-500/40 rounded-full text-[10px] font-black uppercase tracking-widest text-red-400 mb-2 shadow-lg">
+                                        <i class="fa-solid fa-circle-check text-red-500 mr-1 text-[9px]"></i> Direct Founder Leadership
+                                    </span>
+                                    <span class="text-xl font-black text-white block tracking-tight">LEAD REVOPS ARCHITECT</span>
+                                    <span class="text-xs uppercase tracking-widest text-zinc-400 font-semibold block mt-0.5">IKÓNISCH TECH</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Founder Messaging -->
+                    <div class="lg:col-span-7 space-y-5">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 bg-red-950/50 rounded-full border border-red-500/30 text-xs font-bold text-red-400 uppercase tracking-widest">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <span>No Junior Account Managers</span>
+                        </div>
+
+                        <h2 class="text-2xl sm:text-3xl font-black text-white leading-tight">
+                            You work directly with the lead architect behind your acquisition pipeline.
+                        </h2>
+
+                        <p class="text-sm text-zinc-300 leading-relaxed">
+                            Traditional agencies sell big and delegate your campaigns to entry-level assistants. At IKÓNISCH TECH, every RevOps automation, ad setup, and CRM integration is built and audited directly with our founder.
+                        </p>
+
+                        <div class="pt-4 border-t border-zinc-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                            <span class="text-xs font-medium text-zinc-400">Territory exclusivity strictly enforced.</span>
+                            <a href="#hero-section" class="py-2.5 px-5 bg-[#ff0500] hover:bg-red-700 text-white font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(255,5,0,0.3)]">
+                                Lock In Your Territory
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="bg-gray-900 py-10 text-center text-sm text-gray-400">
-        <div class="max-w-7xl mx-auto px-4">
-            <p class="mb-2">&copy; 2025 IKONISCH TECH. All rights reserved.</p>
+    <!-- Testimonials & Client Results Section -->
+    <section id="testimonials-section" class="max-w-7xl mx-auto px-4 sm:px-6 py-20">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-xs uppercase tracking-widest font-bold text-[#ff0500]">Client Proof & Testimonials</span>
+            <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">Real Results Across Target Verticals</h2>
+            <p class="text-xs sm:text-sm text-zinc-400 mt-2">Here is how our automated RevOps and local ad campaigns perform for active partners.</p>
+        </div>
 
-            <div class="flex justify-center space-x-4">
-                <a href="#" class="hover:text-red">Confidentiality Agreement</a>
-                <span>|</span>
-                <a href="#" class="hover:text-red">Partner Terms</a>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Law Firm Testimonial -->
+            <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-red-500/40 transition-colors">
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="px-2.5 py-1 bg-red-950/60 border border-red-800/40 rounded-lg text-[11px] font-bold text-red-400 uppercase">
+                            ⚖️ Law Firm Vertical
+                        </span>
+                        <div class="text-amber-400 text-xs">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-sm text-zinc-200 italic leading-relaxed">
+                        "Before IKÓNISCH TECH, our intake team was taking 30–45 minutes to respond to new case leads. Their automated sub-2 minute CRM response system immediately captured retained clients before competitors even called back."
+                    </p>
+                </div>
+                <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
+                    <div>
+                        <span class="text-sm font-bold text-white block">Managing Partner</span>
+                        <span class="text-xs text-zinc-400">Personal Injury & Business Law</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-lg font-black text-white block">$148,500</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Fee Revenue Added</span>
+                    </div>
+                </div>
             </div>
+
+            <!-- Real Estate Testimonial -->
+            <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-red-500/40 transition-colors">
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="px-2.5 py-1 bg-red-950/60 border border-red-800/40 rounded-lg text-[11px] font-bold text-red-400 uppercase">
+                            🏢 Real Estate Brokerage
+                        </span>
+                        <div class="text-amber-400 text-xs">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-sm text-zinc-200 italic leading-relaxed">
+                        "We stopped buying low-quality shared leads from portals. IKÓNISCH TECH set up exclusive seller acquisition campaigns with direct calendar booking. Our pipeline quality jumped dramatically in 60 days."
+                    </p>
+                </div>
+                <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
+                    <div>
+                        <span class="text-sm font-bold text-white block">Principal Broker</span>
+                        <span class="text-xs text-zinc-400">Luxury Regional Commercial & Residential</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-lg font-black text-white block">4.8x ROI</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Ad Spend Return</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Construction Firm Testimonial -->
+            <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-red-500/40 transition-colors">
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="px-2.5 py-1 bg-red-950/60 border border-red-800/40 rounded-lg text-[11px] font-bold text-red-400 uppercase">
+                            🏗️ Construction & Contracting
+                        </span>
+                        <div class="text-amber-400 text-xs">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-sm text-zinc-200 italic leading-relaxed">
+                        "High-ticket commercial and remodeling contracts require serious trust. Their system nurtures prospects automatically with case studies and qualifies bid requests before hitting our estimator's desk."
+                    </p>
+                </div>
+                <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
+                    <div>
+                        <span class="text-sm font-bold text-white block">Director of Operations</span>
+                        <span class="text-xs text-zinc-400">Commercial Contracting</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-lg font-black text-white block">12 Contracts</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Closed ($45k–$180k LTV)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gym / Fitness Testimonial -->
+            <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-red-500/40 transition-colors">
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="px-2.5 py-1 bg-red-950/60 border border-red-800/40 rounded-lg text-[11px] font-bold text-red-400 uppercase">
+                            🏋️ Premium Gym Chains
+                        </span>
+                        <div class="text-amber-400 text-xs">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-sm text-zinc-200 italic leading-relaxed">
+                        "Their automated SMS follow-up sequence converted high-value annual memberships seamlessly. We added $52,000 in new recurring contract value within 120 days of deployment."
+                    </p>
+                </div>
+                <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
+                    <div>
+                        <span class="text-sm font-bold text-white block">Regional Director</span>
+                        <span class="text-xs text-zinc-400">High-End Fitness Facilities</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-lg font-black text-white block">$52,000</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">New Contract Value</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq-section" class="border-t border-zinc-900 bg-zinc-950 py-16 px-4 sm:px-6">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="text-xs uppercase tracking-widest font-bold text-[#ff0500]">Clarifications</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="space-y-3">
+                <div class="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
+                    <button onclick="toggleFaq(this)" class="w-full p-4 text-left font-bold text-xs sm:text-sm text-white flex justify-between items-center focus:outline-none">
+                        <span>How does territory exclusivity work?</span>
+                        <i class="fa-solid fa-chevron-down text-xs text-zinc-500 transition-transform"></i>
+                    </button>
+                    <div class="p-4 pt-0 text-xs text-zinc-400 hidden border-t border-zinc-800/60 mt-1">
+                        We strictly limit client partnerships to a maximum of 3 non-competing firms per geographic market. Once locked, we never work with direct local competitors in your vertical.
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
+                    <button onclick="toggleFaq(this)" class="w-full p-4 text-left font-bold text-xs sm:text-sm text-white flex justify-between items-center focus:outline-none">
+                        <span>What happens after I schedule a call?</span>
+                        <i class="fa-solid fa-chevron-down text-xs text-zinc-500 transition-transform"></i>
+                    </button>
+                    <div class="p-4 pt-0 text-xs text-zinc-400 hidden border-t border-zinc-800/60 mt-1">
+                        You'll receive instant calendar confirmation and a meeting link sent to your email. Our team reviews your local territory metrics prior to the call to present a custom acquisition plan.
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
+                    <button onclick="toggleFaq(this)" class="w-full p-4 text-left font-bold text-xs sm:text-sm text-white flex justify-between items-center focus:outline-none">
+                        <span>Which CRMs and ad systems do you support?</span>
+                        <i class="fa-solid fa-chevron-down text-xs text-zinc-500 transition-transform"></i>
+                    </button>
+                    <div class="p-4 pt-0 text-xs text-zinc-400 hidden border-t border-zinc-800/60 mt-1">
+                        We integrate with GoHighLevel, HubSpot, Salesforce, Clio, Follow Up Boss, Meta Ads Manager, Google Ads, and custom webhook solutions.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-950 border-t border-zinc-900 py-10 px-4 text-center text-xs text-zinc-500">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <span class="font-bold text-white uppercase tracking-wider">IKÓNISCH TECH</span>
+            <span>Direct Inquiries: <a href="mailto:ikonischtech@gmail.com" class="text-red-400 hover:underline">ikonischtech@gmail.com</a></span>
+            <span>© 2026 IKÓNISCH TECH Systems. All rights reserved.</span>
         </div>
     </footer>
 
-    <!-- External JavaScript -->
-    <script src="assets/js/app.js"></script>
+    <!-- JavaScript Handling Form Submission & Prefilled Calendly Integration -->
+    <script>
+        const baseUrl = "https://calendly.com/ikonischtech/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=ff0500";
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('user_name').value.trim();
+            const email = document.getElementById('user_email').value.trim();
+            const phone = document.getElementById('user_phone').value.trim();
+
+            if (!name || !email) return;
+
+            // Hide initial form wrapper and reveal Calendly widget container
+            document.getElementById('top-right-form-wrapper').classList.add('hidden');
+            const bookingContainer = document.getElementById('booking-container');
+            bookingContainer.classList.remove('hidden');
+
+            const slot = document.getElementById('calendly-embed-slot');
+            slot.innerHTML = ''; // Clear existing instance
+
+            // Initialize Calendly with prefilled user data
+            if (window.Calendly) {
+                Calendly.initInlineWidget({
+                    url: baseUrl,
+                    parentElement: slot,
+                    prefill: {
+                        name: name,
+                        email: email,
+                        customAnswers: {
+                            a1: phone // Passes phone number to Calendly custom answer field
+                        }
+                    }
+                });
+            } else {
+                // Fallback URL query parameters if widget script delay
+                const encodedName = encodeURIComponent(name);
+                const encodedEmail = encodeURIComponent(email);
+                const encodedPhone = encodeURIComponent(phone);
+                const fullUrl = `${baseUrl}&name=${encodedName}&email=${encodedEmail}&a1=${encodedPhone}`;
+                
+                slot.innerHTML = `<div class="calendly-inline-widget" data-url="${fullUrl}" style="min-width:320px;height:650px;"></div>`;
+            }
+        }
+
+        function showCalendarDirectly() {
+            document.getElementById('top-right-form-wrapper').classList.add('hidden');
+            const bookingContainer = document.getElementById('booking-container');
+            bookingContainer.classList.remove('hidden');
+
+            const slot = document.getElementById('calendly-embed-slot');
+            slot.innerHTML = '';
+
+            if (window.Calendly) {
+                Calendly.initInlineWidget({
+                    url: baseUrl,
+                    parentElement: slot
+                });
+            } else {
+                slot.innerHTML = `<div class="calendly-inline-widget" data-url="${baseUrl}" style="min-width:320px;height:650px;"></div>`;
+            }
+        }
+
+        function resetFormView() {
+            document.getElementById('booking-container').classList.add('hidden');
+            document.getElementById('top-right-form-wrapper').classList.remove('hidden');
+        }
+
+        function toggleFaq(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+    </script>
 </body>
 </html>
