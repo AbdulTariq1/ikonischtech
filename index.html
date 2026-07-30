@@ -102,28 +102,6 @@
         const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-        // Image Fallback Cascade (Prioritizes new image_d6b805.jpg)
-        const sketchFallbackSources = [
-            'image_d6b805.jpg',
-            'image_d7b728.jpg',
-            'ChatGPT Image Jul 18, 2026, 09_11_15 PM.png',
-            'ChatGPT Image Jul 19, 2026, 01_27_23 AM.png'
-        ];
-        let fallbackIndex = 0;
-
-        function handleImageFallback(imgElem) {
-            fallbackIndex++;
-            if (fallbackIndex < sketchFallbackSources.length) {
-                imgElem.src = sketchFallbackSources[fallbackIndex];
-            } else {
-                imgElem.classList.add('hidden');
-                const svgFallback = document.getElementById('sketch-svg-fallback');
-                if (svgFallback) {
-                    svgFallback.classList.remove('hidden');
-                }
-            }
-        }
-
         function toggleOtherIndustryField(selectElem) {
             const otherField = document.getElementById('other-industry-field');
             if (!otherField) return;
@@ -489,13 +467,13 @@
             <!-- Navigation Links -->
             <nav class="hidden md:flex items-center space-x-8 text-xs uppercase font-bold tracking-wider text-zinc-400">
                 <a href="#hero-section" class="hover:text-white transition-colors">Book Call</a>
+                <a href="#vsl-section" class="hover:text-amber-400 transition-colors">Watch VSL</a>
                 <a href="#calculator-section" class="hover:text-blue-400 transition-colors">Revenue Calculator</a>
-                <a href="#founder-section" class="hover:text-amber-400 transition-colors">About Founder</a>
                 <a href="#projections-section" class="hover:text-white transition-colors">Delivery Model</a>
                 <a href="#faq-section" class="hover:text-white transition-colors">FAQ</a>
             </nav>
 
-            <!-- Navigation CTA: Updated Text -->
+            <!-- Navigation CTA -->
             <div class="flex items-center space-x-3">
                 <a href="#hero-section" class="py-2.5 px-4 bg-gradient-to-r from-[#ff0500] to-red-700 hover:from-red-600 hover:to-red-800 text-white font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(255,5,0,0.4)]">
                     Find Where is My Profit Leaking?
@@ -719,6 +697,70 @@
         </div>
     </main>
 
+    <!-- NEW VSL (VIDEO SALES LETTER) SECTION -->
+    <section id="vsl-section" class="border-t border-zinc-900 bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 py-16 px-4 sm:px-6 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-10 space-y-3">
+                <span class="text-xs uppercase tracking-widest font-extrabold text-amber-400 px-3 py-1 bg-amber-950/50 border border-amber-800/40 rounded-full inline-block">
+                    Executive Strategy Video
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight leading-snug">
+                    How We Help High-Ticket Local Service Businesses Eliminate Profit Leaks & Scale
+                </h2>
+                <p class="text-xs sm:text-sm text-zinc-400">
+                    Watch this brief breakdown to see how our RevOps intake automation and local acquisition architecture work.
+                </p>
+            </div>
+
+            <!-- VSL Responsive Player Card Container -->
+            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-4 sm:p-6 shadow-2xl relative">
+                
+                <div class="aspect-video w-full rounded-2xl bg-zinc-950 border border-zinc-800/80 overflow-hidden relative group flex items-center justify-center">
+                    
+                    <!-- Placeholder Visual Background for Testing -->
+                    <div class="absolute inset-0 bg-gradient-to-tr from-zinc-950 via-zinc-900 to-red-950/40 flex flex-col items-center justify-center text-center p-6 space-y-4">
+                        
+                        <!-- Play Button Icon Placeholder -->
+                        <div class="w-20 h-20 bg-red-600/90 group-hover:bg-red-500 text-white rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(255,5,0,0.5)] transition-all transform group-hover:scale-110 cursor-pointer">
+                            <span class="text-3xl font-black ml-1.5">&#9658;</span>
+                        </div>
+
+                        <div class="space-y-1 z-10 max-w-lg">
+                            <span class="text-xs font-bold uppercase tracking-widest text-red-400">Video Placeholder Active</span>
+                            <p class="text-sm font-semibold text-white">Your Video Embed Link Will Render Here</p>
+                            <p class="text-[11px] text-zinc-500">To embed your Loom, YouTube, Vimeo, or MP4 URL later, paste your embed iframe directly into the marked comment line in index.html.</p>
+                        </div>
+                    </div>
+
+                    <!-- 
+                        ===================================================================
+                        PASTE YOUR YOUTUBE / VIMEO / LOOM EMBED IFRAME BELOW WHEN READY
+                        ===================================================================
+                        Example:
+                        <iframe class="w-full h-full absolute inset-0 z-20" src="YOUR_EMBED_URL_HERE" title="IKÓNISCH TECH VSL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        ===================================================================
+                    -->
+
+                </div>
+
+                <!-- Call to Action below Video -->
+                <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-zinc-800/80 mt-4">
+                    <div class="text-left">
+                        <span class="text-xs font-bold text-white block">Ready to eliminate your pipeline leaks?</span>
+                        <span class="text-[11px] text-zinc-400">Lock in your strategy session slot before regional capacity fills.</span>
+                    </div>
+                    <a href="#hero-section" class="py-3 px-6 bg-gradient-to-r from-[#ff0500] to-red-700 hover:from-red-600 hover:to-red-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-[0_0_15px_rgba(255,5,0,0.4)] whitespace-nowrap">
+                        Book Strategy Session Now
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
     <!-- Interactive Revenue & Pipeline Leakage Calculator -->
     <section id="calculator-section" class="border-t border-zinc-900 bg-zinc-950 py-16 px-4 sm:px-6">
         <div class="max-w-5xl mx-auto">
@@ -801,80 +843,6 @@
                     </a>
                 </div>
 
-            </div>
-        </div>
-    </section>
-
-    <!-- Founder Section (Featuring Updated Sketch Drawing) -->
-    <section id="founder-section" class="border-t border-zinc-900 bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 py-16 px-4 sm:px-6 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto">
-            <div class="bg-zinc-900/90 border border-zinc-800 rounded-3xl p-6 sm:p-10 relative overflow-hidden shadow-2xl">
-                
-                <!-- Glow elements -->
-                <div class="absolute -top-24 -left-24 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none"></div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-                    
-                    <!-- Founder Sketch Image Container -->
-                    <div class="lg:col-span-5 relative">
-                        <div class="absolute -inset-1 bg-gradient-to-r from-red-600/30 via-blue-600/30 to-amber-500/20 rounded-3xl blur-lg opacity-70"></div>
-                        
-                        <div class="relative mx-auto max-w-sm rounded-2xl overflow-hidden border border-zinc-700/80 bg-zinc-950 shadow-2xl group">
-                            <div class="aspect-[4/5] w-full bg-zinc-950 relative overflow-hidden flex items-center justify-center">
-                                
-                                <!-- Founder Sketch Illustration -->
-                                <img id="founder-sketch-img" 
-                                     src="image_d6b805.jpg" 
-                                     alt="Founder & Lead RevOps Architect - Sketch" 
-                                     onerror="handleImageFallback(this)"
-                                     class="w-full h-full object-cover object-top filter contrast-[1.08] brightness-100 group-hover:scale-105 transition-transform duration-700 ease-out">
-                                
-                                <!-- Backup Inline SVG Illustration -->
-                                <div id="sketch-svg-fallback" class="hidden absolute inset-0 bg-zinc-950 flex flex-col items-center justify-center p-6 text-center">
-                                    <svg class="w-32 h-32 text-zinc-600 mb-2 stroke-current" viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="12" cy="7" r="4"></circle>
-                                        <path d="M6 11l2-2 4 4 6-6"></path>
-                                    </svg>
-                                    <span class="text-xs font-bold text-zinc-400 uppercase tracking-widest">Architect Sketch</span>
-                                </div>
-
-                                <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent opacity-90"></div>
-                                
-                                <div class="absolute bottom-0 inset-x-0 z-10 text-center p-6">
-                                    <span class="inline-block px-3 py-1 bg-amber-500/20 backdrop-blur-md border border-amber-500/40 rounded-full text-[10px] font-black uppercase tracking-widest text-amber-400 mb-2 shadow-lg">
-                                        Direct Founder Leadership
-                                    </span>
-                                    <span class="text-xl font-black text-white block tracking-tight">LEAD REVOPS ARCHITECT</span>
-                                    <span class="text-xs uppercase tracking-widest text-zinc-400 font-semibold block mt-0.5">IKÓNISCH TECH</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Founder Messaging -->
-                    <div class="lg:col-span-7 space-y-5">
-                        <div class="inline-flex items-center space-x-2 px-3 py-1 bg-red-950/50 rounded-full border border-red-500/30 text-xs font-bold text-red-400 uppercase tracking-widest">
-                            <span>No Junior Account Managers</span>
-                        </div>
-
-                        <h2 class="text-2xl sm:text-3xl font-black text-white leading-tight">
-                            You work directly with the lead architect behind your acquisition pipeline.
-                        </h2>
-
-                        <p class="text-sm text-zinc-300 leading-relaxed">
-                            Traditional agencies sell big and delegate your campaigns to entry-level assistants. At IKÓNISCH TECH, every RevOps automation, ad setup, and CRM integration is built and audited directly with our founder.
-                        </p>
-
-                        <div class="pt-4 border-t border-zinc-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                            <span class="text-xs font-medium text-zinc-400">Territory exclusivity strictly enforced.</span>
-                            <a href="#hero-section" class="py-2.5 px-5 bg-[#ff0500] hover:bg-red-700 text-white font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(255,5,0,0.3)]">
-                                Lock In Your Territory
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
