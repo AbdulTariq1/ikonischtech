@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IKÓNISCH TECH | High-Ticket Local Acquisition & RevOps</title>
+    <title>IKÓNISCH TECH | High-Ticket RevOps & Pipeline Architecture</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -64,6 +64,15 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #ff0500;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 5, 0, 0.6);
+        }
     </style>
 </head>
 <body class="selection:bg-red-600 selection:text-white antialiased">
@@ -72,7 +81,7 @@
     <div class="bg-gradient-to-r from-red-950 via-zinc-950 to-red-950 border-b border-red-900/40 text-center py-2 px-4 text-xs font-semibold uppercase tracking-widest text-red-400 relative z-50">
         <div class="max-w-7xl mx-auto flex items-center justify-center space-x-2">
             <span class="inline-block h-2 w-2 rounded-full bg-red-500 animate-ping"></span>
-            <span>Territory Limit: Max 3 Firms per Region. <span class="text-white underline decoration-red-500 underline-offset-2 hidden sm:inline">1 Spot Available</span></span>
+            <span>Territory Limit: Max 3 Firms per Region. <span class="text-white underline decoration-red-500 underline-offset-2 hidden sm:inline">1 Spot Available for Q3</span></span>
         </div>
     </div>
 
@@ -90,8 +99,9 @@
             <!-- Navigation Links -->
             <nav class="hidden md:flex items-center space-x-8 text-xs uppercase font-bold tracking-wider text-zinc-400">
                 <a href="#hero-section" class="hover:text-white transition-colors">Book Call</a>
+                <a href="#calculator-section" class="hover:text-white transition-colors">Revenue Calculator</a>
                 <a href="#founder-section" class="hover:text-white transition-colors">About Founder</a>
-                <a href="#testimonials-section" class="hover:text-white transition-colors">Client Testimonials</a>
+                <a href="#projections-section" class="hover:text-white transition-colors">Delivery Model</a>
                 <a href="#faq-section" class="hover:text-white transition-colors">FAQ</a>
             </nav>
 
@@ -118,11 +128,11 @@
                 </div>
 
                 <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
-                    Scale your local market dominance and add $100k+ in contract value.
+                    Eliminate revenue leaks and capture high-ticket contracts on autopilot.
                 </h1>
 
                 <p class="text-base sm:text-lg text-zinc-300 leading-relaxed">
-                    We deploy automated RevOps response systems and localized paid ad campaigns engineered to capture high-value contracts without cold outreach or shared lead platforms.
+                    We architect automated RevOps intake systems and high-converting ad pipelines that identify slow follow-ups, optimize lead flow, and convert target prospects into booked clients.
                 </p>
 
                 <!-- Key Benefits -->
@@ -140,7 +150,7 @@
 
             </div>
 
-            <!-- Right Column: Lead Form & Calendly Widget -->
+            <!-- Right Column: Lead Form & Auto-Prefilled Calendly Widget -->
             <div class="lg:col-span-5 bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl relative">
                 
                 <!-- STEP 1: Direct Contact Form -->
@@ -151,7 +161,7 @@
                             <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
                         </div>
                         <h2 class="text-2xl font-black text-white">Reserve Your Strategy Call</h2>
-                        <p class="text-xs text-zinc-400">Fill details below to open live calendar availability.</p>
+                        <p class="text-xs text-zinc-400">Fill in your details once below. They will be automatically populated in the calendar booking page.</p>
                     </div>
 
                     <form id="lead-capture-form" class="space-y-4" onsubmit="handleFormSubmit(event)">
@@ -205,7 +215,91 @@
         </div>
     </main>
 
-    <!-- Founder Section -->
+    <!-- NEW SECTION: Interactive Revenue & Pipeline Leakage Calculator -->
+    <section id="calculator-section" class="border-t border-zinc-900 bg-zinc-950 py-16 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto">
+            
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs uppercase tracking-widest font-bold text-[#ff0500]">Pipeline Diagnostic Tool</span>
+                <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">Calculate Your Expected Revenue Growth</h2>
+                <p class="text-xs sm:text-sm text-zinc-400 mt-2">See how much revenue your firm is losing to manual follow-up delay and how RevOps automation converts lost prospects into profit.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-zinc-900/80 border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+                
+                <!-- Calculator Inputs -->
+                <div class="lg:col-span-7 space-y-6">
+                    
+                    <!-- Industry Selector -->
+                    <div>
+                        <label class="block text-xs uppercase font-bold tracking-wider text-zinc-300 mb-2">Select Your Vertical</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <button type="button" onclick="setCalcIndustry('law', 15000, 0.15)" class="calc-ind-btn active py-2.5 px-3 rounded-xl border border-red-500 bg-red-950/40 text-white font-bold text-xs text-center transition-all">⚖️ Law Firm</button>
+                            <button type="button" onclick="setCalcIndustry('realestate', 12000, 0.20)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🏢 Real Estate</button>
+                            <button type="button" onclick="setCalcIndustry('construction', 35000, 0.10)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🏗️ Construction</button>
+                            <button type="button" onclick="setCalcIndustry('gym', 1800, 0.25)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🏋️ Gym Chains</button>
+                        </div>
+                    </div>
+
+                    <!-- Monthly Lead Volume Slider -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs uppercase font-bold tracking-wider text-zinc-300">Monthly Inbound Leads / Inquiries</label>
+                            <span id="calc-leads-val" class="text-sm font-black text-[#ff0500] bg-red-950/60 px-2.5 py-0.5 rounded-md border border-red-900/40">50 Leads/mo</span>
+                        </div>
+                        <input type="range" id="calc-leads" min="10" max="300" step="10" value="50" oninput="updateCalculator()" class="w-full bg-zinc-950 h-2 rounded-lg appearance-none cursor-pointer border border-zinc-800">
+                    </div>
+
+                    <!-- Average Client Value Input -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs uppercase font-bold tracking-wider text-zinc-300">Average Client / Contract Lifetime Value ($)</label>
+                            <span id="calc-value-val" class="text-sm font-black text-emerald-400 bg-emerald-950/60 px-2.5 py-0.5 rounded-md border border-emerald-900/40">$15,000</span>
+                        </div>
+                        <input type="range" id="calc-value" min="500" max="50000" step="500" value="15000" oninput="updateCalculator()" class="w-full bg-zinc-950 h-2 rounded-lg appearance-none cursor-pointer border border-zinc-800">
+                    </div>
+
+                    <!-- Current Response Time -->
+                    <div>
+                        <label class="block text-xs uppercase font-bold tracking-wider text-zinc-300 mb-2">Current Lead Response Time</label>
+                        <select id="calc-response" onchange="updateCalculator()" class="w-full bg-zinc-950 border border-zinc-800 text-xs text-white rounded-xl px-4 py-3 outline-none focus:border-[#ff0500]">
+                            <option value="0.40">Over 1 hour (Estimates 40% lead drop-off)</option>
+                            <option value="0.25">15–60 minutes (Estimates 25% lead drop-off)</option>
+                            <option value="0.10">5–15 minutes (Estimates 10% lead drop-off)</option>
+                            <option value="0.02">Sub-2 minutes via Automation (Optimal - &lt;2% drop-off)</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- Calculator Output Card -->
+                <div class="lg:col-span-5 bg-zinc-950 border border-zinc-800/90 rounded-2xl p-6 space-y-6 flex flex-col justify-between h-full shadow-inner">
+                    <div class="space-y-4">
+                        <span class="text-[10px] uppercase font-black tracking-widest text-zinc-400 block border-b border-zinc-800 pb-2">Estimated Monthly Financial Impact</span>
+                        
+                        <div>
+                            <span class="text-xs text-red-400 block font-medium">Estimated Monthly Revenue Leaked</span>
+                            <span id="out-leaked" class="text-2xl font-black text-red-500">$22,500 / mo</span>
+                            <p class="text-[10px] text-zinc-500 mt-0.5">Lost due to delayed lead intake and manual follow-up gaps.</p>
+                        </div>
+
+                        <div class="pt-2 border-t border-zinc-900">
+                            <span class="text-xs text-emerald-400 block font-medium">Projected Additional Revenue with IKÓNISCH RevOps</span>
+                            <span id="out-projected" class="text-3xl font-black text-emerald-400">$67,500 / mo</span>
+                            <p class="text-[10px] text-zinc-400 mt-0.5">Based on automated sub-2 min speed-to-lead & multi-touch nurture.</p>
+                        </div>
+                    </div>
+
+                    <a href="#hero-section" class="w-full py-3 px-4 bg-[#ff0500] hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-[0_0_15px_rgba(255,5,0,0.4)] text-center block">
+                        Capture This Revenue Now
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Section (With Sketch Portrait) -->
     <section id="founder-section" class="border-t border-zinc-900 bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 py-16 px-4 sm:px-6 relative overflow-hidden">
         <div class="max-w-7xl mx-auto">
             <div class="bg-zinc-900/90 border border-zinc-800 rounded-3xl p-6 sm:p-10 relative overflow-hidden shadow-2xl">
@@ -216,23 +310,24 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
                     
-                    <!-- Founder Image Container -->
+                    <!-- Founder Sketch Image Container -->
                     <div class="lg:col-span-5 relative">
                         <div class="absolute -inset-1 bg-gradient-to-r from-red-600/30 via-red-900/20 to-zinc-800 rounded-3xl blur-lg opacity-70"></div>
                         
                         <div class="relative mx-auto max-w-sm rounded-2xl overflow-hidden border border-zinc-700/80 bg-zinc-950 shadow-2xl group">
                             <div class="aspect-[4/5] w-full bg-zinc-950 relative overflow-hidden flex items-center justify-center">
                                 
-                                <img src="ChatGPT Image Jul 17, 2026, 11_15_20 AM.png" 
-                                     alt="Founder & Lead RevOps Architect" 
-                                     onerror="this.onerror=null; this.src='ChatGPT Image Jul 18, 2026, 09_11_15 PM.png';" 
-                                     class="w-full h-full object-cover object-top filter contrast-[1.05] brightness-95 group-hover:scale-105 transition-transform duration-700 ease-out">
+                                <!-- Founder Sketch Illustration -->
+                                <img src="ChatGPT Image Jul 18, 2026, 09_11_15 PM.png" 
+                                     alt="Founder & Chief RevOps Architect - Sketch Edition" 
+                                     onerror="this.onerror=null; this.src='ChatGPT Image Jul 19, 2026, 01_27_23 AM.png';" 
+                                     class="w-full h-full object-cover object-top filter contrast-[1.08] brightness-100 group-hover:scale-105 transition-transform duration-700 ease-out">
                                 
                                 <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent opacity-90"></div>
                                 
                                 <div class="absolute bottom-0 inset-x-0 z-10 text-center p-6">
                                     <span class="inline-block px-3 py-1 bg-red-500/20 backdrop-blur-md border border-red-500/40 rounded-full text-[10px] font-black uppercase tracking-widest text-red-400 mb-2 shadow-lg">
-                                        <i class="fa-solid fa-circle-check text-red-500 mr-1 text-[9px]"></i> Direct Founder Leadership
+                                        <i class="fa-solid fa-pen-nib text-red-500 mr-1 text-[9px]"></i> Direct Founder Leadership
                                     </span>
                                     <span class="text-xl font-black text-white block tracking-tight">LEAD REVOPS ARCHITECT</span>
                                     <span class="text-xs uppercase tracking-widest text-zinc-400 font-semibold block mt-0.5">IKÓNISCH TECH</span>
@@ -268,120 +363,116 @@
         </div>
     </section>
 
-    <!-- Testimonials & Client Results Section -->
-    <section id="testimonials-section" class="max-w-7xl mx-auto px-4 sm:px-6 py-20">
+    <!-- Delivery Models & Financial Projections Section -->
+    <section id="projections-section" class="max-w-7xl mx-auto px-4 sm:px-6 py-20">
         <div class="text-center max-w-2xl mx-auto mb-12">
-            <span class="text-xs uppercase tracking-widest font-bold text-[#ff0500]">Client Proof & Testimonials</span>
-            <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">Real Results Across Target Verticals</h2>
-            <p class="text-xs sm:text-sm text-zinc-400 mt-2">Here is how our automated RevOps and local ad campaigns perform for active partners.</p>
+            <span class="text-xs uppercase tracking-widest font-bold text-[#ff0500]">System Delivery Architecture</span>
+            <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">Expected Delivery & Revenue Projections</h2>
+            <p class="text-xs sm:text-sm text-zinc-400 mt-2">How our RevOps framework and ad pipelines deliver structured financial growth across target industries.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <!-- Law Firm Testimonial -->
+            <!-- Law Firm Projections -->
             <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-red-500/40 transition-colors">
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <span class="px-2.5 py-1 bg-red-950/60 border border-red-800/40 rounded-lg text-[11px] font-bold text-red-400 uppercase">
-                            ⚖️ Law Firm Vertical
+                            ⚖️ Law Firm Framework
                         </span>
-                        <div class="text-amber-400 text-xs">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
+                        <span class="text-[11px] text-zinc-400 font-mono">120-Day Target</span>
                     </div>
-                    <p class="text-sm text-zinc-200 italic leading-relaxed">
-                        "Before IKÓNISCH TECH, our intake team was taking 30–45 minutes to respond to new case leads. Their automated sub-2 minute CRM response system immediately captured retained clients before competitors even called back."
+                    <h3 class="text-base font-bold text-white">Automated Case Intake & Retainer Pipeline</h3>
+                    <p class="text-sm text-zinc-300 leading-relaxed">
+                        Expected Delivery: Sub-2 minute automated phone call and SMS trigger upon web form submission, direct intake screening calendar booking, and pre-qualifying questionnaire.
                     </p>
                 </div>
                 <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
                     <div>
-                        <span class="text-sm font-bold text-white block">Managing Partner</span>
-                        <span class="text-xs text-zinc-400">Personal Injury & Business Law</span>
+                        <span class="text-xs font-bold text-white block">Projected Capacity</span>
+                        <span class="text-xs text-zinc-400">10–18 New Retained Cases / mo</span>
                     </div>
                     <div class="text-right">
-                        <span class="text-lg font-black text-white block">$148,500</span>
-                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Fee Revenue Added</span>
+                        <span class="text-lg font-black text-emerald-400 block">+$120k–$180k</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Contracted Value Projection</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Real Estate Testimonial -->
+            <!-- Real Estate Projections -->
             <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-red-500/40 transition-colors">
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <span class="px-2.5 py-1 bg-red-950/60 border border-red-800/40 rounded-lg text-[11px] font-bold text-red-400 uppercase">
-                            🏢 Real Estate Brokerage
+                            🏢 Real Estate Framework
                         </span>
-                        <div class="text-amber-400 text-xs">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
+                        <span class="text-[11px] text-zinc-400 font-mono">120-Day Target</span>
                     </div>
-                    <p class="text-sm text-zinc-200 italic leading-relaxed">
-                        "We stopped buying low-quality shared leads from portals. IKÓNISCH TECH set up exclusive seller acquisition campaigns with direct calendar booking. Our pipeline quality jumped dramatically in 60 days."
+                    <h3 class="text-base font-bold text-white">Exclusive Seller & Commercial Listing Engine</h3>
+                    <p class="text-sm text-zinc-300 leading-relaxed">
+                        Expected Delivery: Localized valuation campaign ads, automated property report delivery via SMS, instant agent routing, and automated calendar follow-ups.
                     </p>
                 </div>
                 <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
                     <div>
-                        <span class="text-sm font-bold text-white block">Principal Broker</span>
-                        <span class="text-xs text-zinc-400">Luxury Regional Commercial & Residential</span>
+                        <span class="text-xs font-bold text-white block">Projected Capacity</span>
+                        <span class="text-xs text-zinc-400">4–8 Listing Consultations / mo</span>
                     </div>
                     <div class="text-right">
-                        <span class="text-lg font-black text-white block">4.8x ROI</span>
-                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Ad Spend Return</span>
+                        <span class="text-lg font-black text-emerald-400 block">4.5x–6.0x</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Target ROAS Benchmark</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Construction Firm Testimonial -->
+            <!-- Construction Firm Projections -->
             <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-red-500/40 transition-colors">
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <span class="px-2.5 py-1 bg-red-950/60 border border-red-800/40 rounded-lg text-[11px] font-bold text-red-400 uppercase">
-                            🏗️ Construction & Contracting
+                            🏗️ Construction Framework
                         </span>
-                        <div class="text-amber-400 text-xs">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
+                        <span class="text-[11px] text-zinc-400 font-mono">120-Day Target</span>
                     </div>
-                    <p class="text-sm text-zinc-200 italic leading-relaxed">
-                        "High-ticket commercial and remodeling contracts require serious trust. Their system nurtures prospects automatically with case studies and qualifies bid requests before hitting our estimator's desk."
+                    <h3 class="text-base font-bold text-white">High-Ticket Contract & Estimator Funnel</h3>
+                    <p class="text-sm text-zinc-300 leading-relaxed">
+                        Expected Delivery: Automated qualification wizard screening project budgets ($25k+), digital portfolio nurture sequence, and estimator calendar booking.
                     </p>
                 </div>
                 <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
                     <div>
-                        <span class="text-sm font-bold text-white block">Director of Operations</span>
-                        <span class="text-xs text-zinc-400">Commercial Contracting</span>
+                        <span class="text-xs font-bold text-white block">Projected Capacity</span>
+                        <span class="text-xs text-zinc-400">3–6 Commercial & Remodel Contracts</span>
                     </div>
                     <div class="text-right">
-                        <span class="text-lg font-black text-white block">12 Contracts</span>
-                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Closed ($45k–$180k LTV)</span>
+                        <span class="text-lg font-black text-emerald-400 block">+$150k–$300k</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Contract Value Projection</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Gym / Fitness Testimonial -->
+            <!-- Gym / Fitness Projections -->
             <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-red-500/40 transition-colors">
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <span class="px-2.5 py-1 bg-red-950/60 border border-red-800/40 rounded-lg text-[11px] font-bold text-red-400 uppercase">
-                            🏋️ Premium Gym Chains
+                            🏋️ Gym Chain Framework
                         </span>
-                        <div class="text-amber-400 text-xs">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
+                        <span class="text-[11px] text-zinc-400 font-mono">120-Day Target</span>
                     </div>
-                    <p class="text-sm text-zinc-200 italic leading-relaxed">
-                        "Their automated SMS follow-up sequence converted high-value annual memberships seamlessly. We added $52,000 in new recurring contract value within 120 days of deployment."
+                    <h3 class="text-base font-bold text-white">Recurring High-Value Membership & PT Funnel</h3>
+                    <p class="text-sm text-zinc-300 leading-relaxed">
+                        Expected Delivery: Geo-targeted fitness challenge ads, automated SMS check-ins, instant orientation booking, and automated trial-to-paid conversion workflows.
                     </p>
                 </div>
                 <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
                     <div>
-                        <span class="text-sm font-bold text-white block">Regional Director</span>
-                        <span class="text-xs text-zinc-400">High-End Fitness Facilities</span>
+                        <span class="text-xs font-bold text-white block">Projected Capacity</span>
+                        <span class="text-xs text-zinc-400">40–80 High-LTV Memberships / mo</span>
                     </div>
                     <div class="text-right">
-                        <span class="text-lg font-black text-white block">$52,000</span>
-                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">New Contract Value</span>
+                        <span class="text-lg font-black text-emerald-400 block">+$40k–$60k</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Annual Recurring Value</span>
                     </div>
                 </div>
             </div>
@@ -453,6 +544,15 @@
 
             if (!name || !email) return;
 
+            // Optional: Backup email dispatch via FormSubmit service to ensure lead notification reaches ikonischtech@gmail.com
+            try {
+                fetch('https://formsubmit.co/ajax/ikonischtech@gmail.com', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ name: name, email: email, phone: phone, source: 'IKÓNISCH TECH Landing Page Form' })
+                }).catch(() => {});
+            } catch (e) {}
+
             // Hide initial form wrapper and reveal Calendly widget container
             document.getElementById('top-right-form-wrapper').classList.add('hidden');
             const bookingContainer = document.getElementById('booking-container');
@@ -461,7 +561,7 @@
             const slot = document.getElementById('calendly-embed-slot');
             slot.innerHTML = ''; // Clear existing instance
 
-            // Initialize Calendly with prefilled user data
+            // Initialize Calendly with prefilled user data so they DON'T re-type anything
             if (window.Calendly) {
                 Calendly.initInlineWidget({
                     url: baseUrl,
@@ -514,6 +614,45 @@
             content.classList.toggle('hidden');
             icon.classList.toggle('rotate-180');
         }
+
+        /* RevOps Revenue Calculator Logic */
+        let currentAvgVal = 15000;
+
+        function setCalcIndustry(ind, avgVal, defaultDrop) {
+            document.querySelectorAll('.calc-ind-btn').forEach(btn => {
+                btn.classList.remove('active', 'border-red-500', 'bg-red-950/40', 'text-white');
+                btn.classList.add('border-zinc-800', 'bg-zinc-950', 'text-zinc-400');
+            });
+            event.target.classList.add('active', 'border-red-500', 'bg-red-950/40', 'text-white');
+            event.target.classList.remove('border-zinc-800', 'bg-zinc-950', 'text-zinc-400');
+
+            currentAvgVal = avgVal;
+            document.getElementById('calc-value').value = avgVal;
+            updateCalculator();
+        }
+
+        function updateCalculator() {
+            const leads = parseInt(document.getElementById('calc-leads').value);
+            const value = parseInt(document.getElementById('calc-value').value);
+            const dropRate = parseFloat(document.getElementById('calc-response').value);
+
+            document.getElementById('calc-leads-val').innerText = `${leads} Leads/mo`;
+            document.getElementById('calc-value-val').innerText = `$${value.toLocaleString()}`;
+
+            // Calculations
+            const leakedLeads = Math.round(leads * dropRate);
+            const leakedRevenue = leakedLeads * value;
+            
+            // Projected new revenue captured by automated RevOps intake
+            const capturedLeads = Math.round(leads * 0.15); // Estimated baseline conversion gain
+            const projectedRevenue = Math.max(leakedRevenue, capturedLeads * value);
+
+            document.getElementById('out-leaked').innerText = `$${leakedRevenue.toLocaleString()} / mo`;
+            document.getElementById('out-projected').innerText = `$${projectedRevenue.toLocaleString()} / mo`;
+        }
+
+        // Initialize calculator on page load
+        window.addEventListener('DOMContentLoaded', updateCalculator);
     </script>
 </body>
 </html>
