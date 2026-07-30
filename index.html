@@ -31,8 +31,6 @@
         }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         body {
@@ -58,11 +56,6 @@
             background: rgba(18, 18, 21, 0.85);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .text-gradient-brand {
-            background: linear-gradient(135deg, #ff0500 0%, #3b82f6 50%, #eab308 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -92,6 +85,385 @@
             box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
         }
     </style>
+
+    <!-- Global Application Logic placed in <head> so inline handlers are defined before DOM parsing -->
+    <script>
+        let userData = {};
+        let selectedDate = null;
+        let selectedTime = null;
+        let currentYear = 2026;
+        let currentMonth = 7; // August (0-indexed)
+
+        // Target notification emails
+        const primaryEmail = "ikonischtech@gmail.com";
+        const secondaryEmail = "abdulhaseebtariq46@gmail.com";
+
+        // Detect user's local timezone
+        const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        // Image Fallback Cascade (Prioritizes new image_d6b805.jpg)
+        const sketchFallbackSources = [
+            'image_d6b805.jpg',
+            'image_d7b728.jpg',
+            'ChatGPT Image Jul 18, 2026, 09_11_15 PM.png',
+            'ChatGPT Image Jul 19, 2026, 01_27_23 AM.png'
+        ];
+        let fallbackIndex = 0;
+
+        function handleImageFallback(imgElem) {
+            fallbackIndex++;
+            if (fallbackIndex < sketchFallbackSources.length) {
+                imgElem.src = sketchFallbackSources[fallbackIndex];
+            } else {
+                imgElem.classList.add('hidden');
+                const svgFallback = document.getElementById('sketch-svg-fallback');
+                if (svgFallback) {
+                    svgFallback.classList.remove('hidden');
+                }
+            }
+        }
+
+        function toggleOtherIndustryField(selectElem) {
+            const otherField = document.getElementById('other-industry-field');
+            if (!otherField) return;
+            if (selectElem.value === 'Others') {
+                otherField.classList.remove('hidden');
+                document.getElementById('user_other_industry').setAttribute('required', 'required');
+            } else {
+                otherField.classList.add('hidden');
+                document.getElementById('user_other_industry').removeAttribute('required');
+            }
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('user_name').value.trim();
+            const email = document.getElementById('user_email').value.trim();
+            const phone = document.getElementById('user_phone').value.trim();
+            let vertical = document.getElementById('user_vertical').value;
+
+            if (vertical === 'Others') {
+                const customInd = document.getElementById('user_other_industry').value.trim();
+                vertical = customInd ? `Others (${customInd})` : 'Others';
+            }
+
+            userData = { name, email, phone, vertical };
+
+            // Update Step 2 Header
+            document.getElementById('summary-name').innerText = name;
+            document.getElementById('summary-contact').innerText = `${email} • ${phone}`;
+            document.getElementById('summary-vertical').innerText = vertical;
+            document.getElementById('user-timezone-display').innerText = userTimezone;
+
+            // Transition UI to Step 2 Custom Calendar
+            document.getElementById('top-right-form-wrapper').classList.add('hidden');
+            document.getElementById('booking-container').classList.remove('hidden');
+
+            renderCalendar();
+        }
+
+        function resetFormView() {
+            document.getElementById('booking-container').classList.add('hidden');
+            document.getElementById('top-right-form-wrapper').classList.remove('hidden');
+        }
+
+        function changeMonth(delta) {
+            currentMonth += delta;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const label = document.getElementById('calendar-month-label');
+            if (label) label.innerText = `${monthNames[currentMonth]} ${currentYear}`;
+            
+            const grid = document.getElementById('calendar-days-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay(); // 0 is Sun
+            const startOffset = (firstDay === 0) ? 6 : firstDay - 1;
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+            for (let i = 0; i < startOffset; i++) {
+                const empty = document.createElement('div');
+                empty.className = 'py-2';
+                grid.appendChild(empty);
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateObj = new Date(currentYear, currentMonth, day);
+                const dayOfWeek = dateObj.getDay(); // 5 = Friday
+                const isFriday = (dayOfWeek === 5);
+
+                const dayBtn = document.createElement('button');
+                dayBtn.type = 'button';
+                dayBtn.innerText = day;
+                dayBtn.className = `py-2 text-center rounded-lg border border-zinc-800 transition-all font-semibold ${
+                    isFriday 
+                    ? 'cal-day disabled border-red-950/40 text-red-700/60' 
+                    : 'bg-zinc-900 hover:border-blue-500 text-white cursor-pointer'
+                }`;
+
+                if (selectedDate && selectedDate.day === day && selectedDate.month === currentMonth && selectedDate.year === currentYear) {
+                    dayBtn.classList.add('selected');
+                }
+
+                if (isFriday) {
+                    dayBtn.title = 'Friday - Off Day';
+                } else {
+                    dayBtn.onclick = () => selectDate(day, currentMonth, currentYear, dayBtn);
+                }
+
+                grid.appendChild(dayBtn);
+            }
+        }
+
+        function selectDate(day, month, year, elem) {
+            document.querySelectorAll('.cal-day').forEach(b => b.classList.remove('selected'));
+            elem.classList.add('selected');
+
+            selectedDate = { day, month, year, formatted: `${monthNames[month]} ${day}, ${year}` };
+            document.getElementById('selected-date-label').innerText = `${monthNames[month]} ${day}`;
+
+            renderTimeSlots();
+        }
+
+        // Convert base host slot hours into user local time
+        function formatSlotInUserTimezone(baseHour, baseMinute) {
+            const tempDate = new Date(currentYear, currentMonth, selectedDate ? selectedDate.day : 1, baseHour, baseMinute);
+            return tempDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+        }
+
+        function renderTimeSlots() {
+            const slotsWrapper = document.getElementById('time-slots-wrapper');
+            if (!slotsWrapper) return;
+            slotsWrapper.classList.remove('hidden');
+
+            const nightContainer = document.getElementById('slots-night');
+            const dayContainer = document.getElementById('slots-day');
+            nightContainer.innerHTML = '';
+            dayContainer.innerHTML = '';
+
+            // Host Base Hours: Night (12am-3am) & Afternoon/Morning (3pm-11:30am)
+            const nightBase = [
+                { h: 0, m: 0 }, { h: 0, m: 30 }, { h: 1, m: 0 }, { h: 1, m: 30 }, { h: 2, m: 0 }, { h: 2, m: 30 }, { h: 3, m: 0 }
+            ];
+
+            const dayBase = [
+                { h: 15, m: 0 }, { h: 15, m: 30 }, { h: 16, m: 0 }, { h: 16, m: 30 }, { h: 17, m: 0 }, { h: 17, m: 30 },
+                { h: 18, m: 0 }, { h: 18, m: 30 }, { h: 19, m: 0 }, { h: 19, m: 30 }, { h: 20, m: 0 }, { h: 20, m: 30 },
+                { h: 21, m: 0 }, { h: 21, m: 30 }, { h: 22, m: 0 }, { h: 22, m: 30 }, { h: 23, m: 0 }, { h: 23, m: 30 },
+                { h: 8, m: 0 }, { h: 8, m: 30 }, { h: 9, m: 0 }, { h: 9, m: 30 }, { h: 10, m: 0 }, { h: 10, m: 30 }, { h: 11, m: 0 }, { h: 11, m: 30 }
+            ];
+
+            nightBase.forEach(slot => {
+                const userTimeStr = formatSlotInUserTimezone(slot.h, slot.m);
+                const btn = createSlotButton(userTimeStr, slot);
+                nightContainer.appendChild(btn);
+            });
+
+            dayBase.forEach(slot => {
+                const userTimeStr = formatSlotInUserTimezone(slot.h, slot.m);
+                const btn = createSlotButton(userTimeStr, slot);
+                dayContainer.appendChild(btn);
+            });
+        }
+
+        function createSlotButton(userTimeStr, baseSlotObj) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.innerText = userTimeStr;
+            btn.className = 'time-slot py-1.5 px-2 text-[11px] font-bold bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300 hover:border-blue-500 hover:text-white transition-all text-center';
+
+            if (selectedTime && selectedTime.userTime === userTimeStr) {
+                btn.classList.add('selected');
+            }
+
+            btn.onclick = () => {
+                document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                btn.classList.add('selected');
+                
+                // Format host time string
+                const hostDate = new Date(currentYear, currentMonth, selectedDate.day, baseSlotObj.h, baseSlotObj.m);
+                const hostTimeStr = hostDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+
+                selectedTime = { userTime: userTimeStr, hostTime: hostTimeStr, rawSlot: baseSlotObj };
+
+                // Enable Confirm Button
+                const confirmBtn = document.getElementById('confirm-booking-btn');
+                confirmBtn.removeAttribute('disabled');
+                confirmBtn.innerText = `Confirm Slot: ${selectedDate.formatted} @ ${userTimeStr}`;
+                confirmBtn.className = 'w-full py-3.5 px-4 bg-gradient-to-r from-[#ff0500] to-red-700 hover:from-red-600 hover:to-red-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-[0_0_20px_rgba(255,5,0,0.4)] cursor-pointer';
+            };
+
+            return btn;
+        }
+
+        function confirmCustomBooking() {
+            if (!selectedDate || !selectedTime) return;
+
+            const payload = {
+                lead_name: userData.name,
+                lead_email: userData.email,
+                lead_phone: userData.phone,
+                vertical: userData.vertical,
+                client_timezone: userTimezone,
+                booking_date: selectedDate.formatted,
+                client_local_time: selectedTime.userTime,
+                host_time_slot: selectedTime.hostTime,
+                routed_emails: `${primaryEmail}, ${secondaryEmail}`,
+                timestamp: new Date().toISOString()
+            };
+
+            // Dispatch notification to BOTH ikonischtech@gmail.com and abdulhaseebtariq46@gmail.com
+            try {
+                fetch(`https://formsubmit.co/ajax/${primaryEmail}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(() => {});
+
+                fetch(`https://formsubmit.co/ajax/${secondaryEmail}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(() => {});
+            } catch (err) {}
+
+            // Mailto dual trigger
+            const mailSubject = encodeURIComponent(`[NEW STRATEGY CALL] ${userData.name} (${userData.vertical})`);
+            const mailBody = encodeURIComponent(`New Strategy Call Booking:\n\nName: ${userData.name}\nEmail: ${userData.email}\nPhone: ${userData.phone}\nVertical: ${userData.vertical}\nClient Timezone: ${userTimezone}\nClient Local Slot: ${selectedDate.formatted} @ ${selectedTime.userTime}\nHost Slot: ${selectedDate.formatted} @ ${selectedTime.hostTime}`);
+            const mailUrl = `mailto:${primaryEmail},${secondaryEmail}?subject=${mailSubject}&body=${mailBody}`;
+            
+            const hiddenLink = document.createElement('a');
+            hiddenLink.href = mailUrl;
+            hiddenLink.target = '_blank';
+            document.body.appendChild(hiddenLink);
+            hiddenLink.click();
+            document.body.removeChild(hiddenLink);
+
+            // Render Confirmation Screen
+            document.getElementById('booking-container').classList.add('hidden');
+            document.getElementById('confirmation-container').classList.remove('hidden');
+
+            document.getElementById('conf-slot-time').innerText = `${selectedDate.formatted} @ ${selectedTime.userTime} (${userTimezone})`;
+            document.getElementById('conf-host-time').innerText = `${selectedDate.formatted} @ ${selectedTime.hostTime}`;
+            document.getElementById('conf-user-email').innerText = userData.email;
+        }
+
+        // Direct Google Calendar Add Event Integration
+        function addToGoogleCalendar() {
+            if (!selectedDate || !selectedTime) return;
+
+            const startHour = selectedTime.rawSlot ? selectedTime.rawSlot.h : 15;
+            const startMin = selectedTime.rawSlot ? selectedTime.rawSlot.m : 0;
+            
+            const startDate = new Date(currentYear, currentMonth, selectedDate.day, startHour, startMin);
+            const endDate = new Date(startDate.getTime() + 45 * 60000); // 45 minute duration
+
+            const formatGTime = (d) => d.toISOString().replace(/-|:|\.\d\d\d/g, "");
+
+            const title = encodeURIComponent(`IKÓNISCH TECH Strategy Session - ${userData.name}`);
+            const details = encodeURIComponent(`Profit Leak Strategy Call\\nClient Name: ${userData.name}\\nClient Email: ${userData.email}\\nClient Phone: ${userData.phone}\\nVertical: ${userData.vertical}\\nHost Email: ${primaryEmail}`);
+            const addEmails = encodeURIComponent(`${primaryEmail},${secondaryEmail},${userData.email}`);
+
+            const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${formatGTime(startDate)}/${formatGTime(endDate)}&details=${details}&add=${addEmails}`;
+
+            window.open(gCalUrl, '_blank');
+        }
+
+        function downloadCalendarInvite() {
+            if (!selectedDate || !selectedTime) return;
+
+            const icsData = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//IKONISCH TECH//Strategy Session//EN',
+                'BEGIN:VEVENT',
+                `SUMMARY:IKÓNISCH TECH Strategy Call - ${userData.name}`,
+                `DESCRIPTION:Profit Leak Strategy Session with Lead RevOps Architect at IKÓNISCH TECH.\\nAttendee: ${userData.name}\\nPhone: ${userData.phone}\\nClient Timezone: ${userTimezone}`,
+                `LOCATION:Online Strategy Room`,
+                `STATUS:CONFIRMED`,
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\n');
+
+            const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.setAttribute('download', 'IkonischTech_Strategy_Call.ics');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function toggleFaq(btn) {
+            const content = btn.nextElementSibling;
+            if (content) content.classList.toggle('hidden');
+        }
+
+        /* RevOps Revenue Calculator Logic */
+        let currentAvgVal = 15000;
+
+        function setCalcIndustry(ind, avgVal) {
+            document.querySelectorAll('.calc-ind-btn').forEach(btn => {
+                btn.classList.remove('active', 'border-red-500', 'bg-red-950/40', 'text-white');
+                btn.classList.add('border-zinc-800', 'bg-zinc-950', 'text-zinc-400');
+            });
+            if (window.event && window.event.target) {
+                window.event.target.classList.add('active', 'border-red-500', 'bg-red-950/40', 'text-white');
+                window.event.target.classList.remove('border-zinc-800', 'bg-zinc-950', 'text-zinc-400');
+            }
+
+            currentAvgVal = avgVal;
+            const calcValElem = document.getElementById('calc-value');
+            if (calcValElem) calcValElem.value = avgVal;
+            updateCalculator();
+        }
+
+        function updateCalculator() {
+            const leadsElem = document.getElementById('calc-leads');
+            const valueElem = document.getElementById('calc-value');
+            const responseElem = document.getElementById('calc-response');
+
+            if (!leadsElem || !valueElem || !responseElem) return;
+
+            const leads = parseInt(leadsElem.value);
+            const value = parseInt(valueElem.value);
+            const dropRate = parseFloat(responseElem.value);
+
+            const leadsValDisp = document.getElementById('calc-leads-val');
+            const valueValDisp = document.getElementById('calc-value-val');
+
+            if (leadsValDisp) leadsValDisp.innerText = `${leads} Leads/mo`;
+            if (valueValDisp) valueValDisp.innerText = `$${value.toLocaleString()}`;
+
+            const leakedLeads = Math.round(leads * dropRate);
+            const leakedRevenue = leakedLeads * value;
+            
+            const capturedLeads = Math.round(leads * 0.15); 
+            const projectedRevenue = Math.max(leakedRevenue, capturedLeads * value);
+
+            const outLeaked = document.getElementById('out-leaked');
+            const outProjected = document.getElementById('out-projected');
+
+            if (outLeaked) outLeaked.innerText = `$${leakedRevenue.toLocaleString()} / mo`;
+            if (outProjected) outProjected.innerText = `$${projectedRevenue.toLocaleString()} / mo`;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateCalculator();
+        });
+    </script>
 </head>
 <body class="selection:bg-red-600 selection:text-white antialiased">
 
@@ -123,10 +495,10 @@
                 <a href="#faq-section" class="hover:text-white transition-colors">FAQ</a>
             </nav>
 
-            <!-- Navigation CTA -->
+            <!-- Navigation CTA: Updated Text -->
             <div class="flex items-center space-x-3">
                 <a href="#hero-section" class="py-2.5 px-4 bg-gradient-to-r from-[#ff0500] to-red-700 hover:from-red-600 hover:to-red-800 text-white font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(255,5,0,0.4)]">
-                    Book Strategy Call
+                    Find Where is My Profit Leaking?
                 </a>
             </div>
         </div>
@@ -160,22 +532,17 @@
                     We architect automated RevOps intake systems and high-converting ad pipelines that identify slow follow-ups, optimize lead flow, and convert target prospects into booked clients.
                 </p>
 
-                <!-- Key Benefits -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs sm:text-sm text-zinc-300">
-                    <div class="flex items-center space-x-3 bg-zinc-900/80 p-3.5 rounded-xl border border-zinc-800/80 hover:border-blue-500/40 transition-colors">
-                        <i class="fa-solid fa-bolt text-[#ff0500] text-base"></i>
-                        <span>Sub-2 minute automated CRM response so leads never go cold.</span>
-                    </div>
-
-                    <div class="flex items-center space-x-3 bg-zinc-900/80 p-3.5 rounded-xl border border-zinc-800/80 hover:border-amber-500/40 transition-colors">
-                        <i class="fa-solid fa-shield-halved text-amber-400 text-base"></i>
-                        <span>Enforced territory exclusivity with max 3 firms per region.</span>
+                <!-- Key Benefits: Retained Exclusivity Box Only -->
+                <div class="pt-2 text-xs sm:text-sm text-zinc-300">
+                    <div class="flex items-center space-x-3 bg-zinc-900/80 p-4 rounded-xl border border-zinc-800/80 hover:border-amber-500/40 transition-colors max-w-xl">
+                        <span class="text-amber-400 font-black text-lg">01</span>
+                        <span class="font-medium text-white">Enforced territory exclusivity with a maximum of 3 firms per region.</span>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Right Column: Lead Form & Custom Interactive Booking System -->
+            <!-- Right Column: Lead Form & Custom Booking System -->
             <div class="lg:col-span-5 bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl relative">
                 
                 <!-- STEP 1: Direct Contact Form -->
@@ -224,12 +591,12 @@
 
                         <button type="submit" class="w-full py-4 px-4 bg-gradient-to-r from-[#ff0500] via-red-600 to-red-700 hover:from-red-600 hover:to-red-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-[0_0_20px_rgba(255,5,0,0.4)] flex items-center justify-center space-x-2">
                             <span>Book my Profit Leak Strategy Call now</span>
-                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                            <span>&rarr;</span>
                         </button>
                     </form>
                 </div>
 
-                <!-- STEP 2: Custom Interactive Booking Engine (12am-3am & 3pm-11:30am, Mon-Sun, Fri Off) -->
+                <!-- STEP 2: Custom Interactive Booking Engine (User Timezone Localized) -->
                 <div id="booking-container" class="hidden space-y-4">
                     <div class="flex justify-between items-center pb-2 border-b border-zinc-800">
                         <div>
@@ -237,17 +604,25 @@
                             <h3 class="text-base font-bold text-white">Select Date & Time Slot</h3>
                         </div>
                         <button onclick="resetFormView()" class="text-[11px] text-zinc-400 hover:text-white underline">
-                            <i class="fa-solid fa-arrow-left mr-1"></i> Edit Lead Info
+                            &larr; Edit Details
                         </button>
                     </div>
 
-                    <!-- User Summary Pill -->
-                    <div class="p-3 bg-zinc-950 border border-zinc-800 rounded-xl flex items-center justify-between text-xs">
-                        <div>
-                            <span id="summary-name" class="font-bold text-white block">John Doe</span>
-                            <span id="summary-contact" class="text-zinc-400 text-[11px]">john@firm.com</span>
+                    <!-- User Summary Pill & Timezone Detection Bar -->
+                    <div class="space-y-2">
+                        <div class="p-3 bg-zinc-950 border border-zinc-800 rounded-xl flex items-center justify-between text-xs">
+                            <div>
+                                <span id="summary-name" class="font-bold text-white block">John Doe</span>
+                                <span id="summary-contact" class="text-zinc-400 text-[11px]">john@firm.com</span>
+                            </div>
+                            <span id="summary-vertical" class="px-2 py-0.5 bg-red-950 text-red-400 border border-red-800/60 rounded text-[10px] font-bold uppercase">Law Firm</span>
                         </div>
-                        <span id="summary-vertical" class="px-2 py-0.5 bg-red-950 text-red-400 border border-red-800/60 rounded text-[10px] font-bold uppercase">Law Firm</span>
+
+                        <!-- Detected Timezone Badge -->
+                        <div class="p-2 bg-blue-950/40 border border-blue-900/60 rounded-lg flex items-center justify-between text-[11px]">
+                            <span class="text-zinc-400">Detected Timezone:</span>
+                            <span id="user-timezone-display" class="font-bold text-blue-400 font-mono">UTC</span>
+                        </div>
                     </div>
 
                     <!-- Custom Calendar Widget -->
@@ -255,9 +630,9 @@
                         
                         <!-- Month Header -->
                         <div class="flex justify-between items-center text-xs font-bold text-white">
-                            <button onclick="changeMonth(-1)" class="p-1.5 hover:bg-zinc-800 rounded"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button onclick="changeMonth(-1)" class="p-1.5 hover:bg-zinc-800 rounded">&lt;</button>
                             <span id="calendar-month-label" class="uppercase tracking-wider text-amber-400 font-extrabold">August 2026</span>
-                            <button onclick="changeMonth(1)" class="p-1.5 hover:bg-zinc-800 rounded"><i class="fa-solid fa-chevron-right"></i></button>
+                            <button onclick="changeMonth(1)" class="p-1.5 hover:bg-zinc-800 rounded">&gt;</button>
                         </div>
 
                         <!-- Days Grid Header -->
@@ -273,15 +648,15 @@
                         <!-- Available Time Slots Section -->
                         <div id="time-slots-wrapper" class="hidden pt-3 border-t border-zinc-800/80 space-y-2">
                             <div class="flex justify-between items-center">
-                                <span class="text-[11px] uppercase font-bold tracking-wider text-zinc-300">Available Times for <span id="selected-date-label" class="text-blue-400">Aug 10</span></span>
-                                <span class="text-[10px] text-zinc-500">(All Slots Active)</span>
+                                <span class="text-[11px] uppercase font-bold tracking-wider text-zinc-300">Times for <span id="selected-date-label" class="text-blue-400">Aug 10</span></span>
+                                <span class="text-[10px] text-zinc-400 font-mono" id="tz-hint">Localized Time</span>
                             </div>
 
                             <div class="space-y-2">
-                                <span class="text-[10px] uppercase font-bold text-amber-400 block">Night Session (12:00 AM - 3:00 AM)</span>
+                                <span class="text-[10px] uppercase font-bold text-amber-400 block">Night Window</span>
                                 <div id="slots-night" class="grid grid-cols-3 gap-1.5"></div>
 
-                                <span class="text-[10px] uppercase font-bold text-blue-400 block pt-1">Afternoon / Morning Session (3:00 PM - 11:30 AM)</span>
+                                <span class="text-[10px] uppercase font-bold text-blue-400 block pt-1">Day/Evening Window</span>
                                 <div id="slots-day" class="grid grid-cols-3 gap-1.5 max-h-40 overflow-y-auto pr-1"></div>
                             </div>
                         </div>
@@ -296,19 +671,23 @@
 
                 <!-- STEP 3: Booking Confirmation Screen -->
                 <div id="confirmation-container" class="hidden space-y-5 text-center py-6">
-                    <div class="w-16 h-16 bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-2xl animate-bounce">
-                        <i class="fa-solid fa-check"></i>
+                    <div class="w-16 h-16 bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
+                        &#10003;
                     </div>
 
                     <div class="space-y-2">
                         <h3 class="text-2xl font-black text-white">Strategy Session Confirmed!</h3>
-                        <p class="text-xs text-zinc-300">Your details and selected slot have been sent directly to <span class="text-amber-400 font-bold">ikonischtech@gmail.com</span>.</p>
+                        <p class="text-xs text-zinc-300">Your details and selected slot have been sent directly to <span class="text-amber-400 font-bold">ikonischtech@gmail.com</span> & <span class="text-amber-400 font-bold">abdulhaseebtariq46@gmail.com</span>.</p>
                     </div>
 
                     <div class="p-4 bg-zinc-950 border border-zinc-800 rounded-xl text-left space-y-2 text-xs">
                         <div class="flex justify-between text-zinc-400">
-                            <span>Reserved Slot:</span>
+                            <span>Your Local Slot:</span>
                             <span id="conf-slot-time" class="font-bold text-blue-400">Mon, Aug 10 @ 3:30 PM</span>
+                        </div>
+                        <div class="flex justify-between text-zinc-400">
+                            <span>Host Local Time:</span>
+                            <span id="conf-host-time" class="font-bold text-amber-400">Mon, Aug 10 @ 3:30 PM</span>
                         </div>
                         <div class="flex justify-between text-zinc-400">
                             <span>Attendee Email:</span>
@@ -320,11 +699,16 @@
                         </div>
                     </div>
 
+                    <!-- Google Calendar & iCal Actions -->
                     <div class="space-y-2 pt-2">
-                        <button onclick="downloadCalendarInvite()" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase rounded-xl transition-all">
-                            <i class="fa-solid fa-calendar-plus mr-2"></i> Add Event to Calendar (.ics)
+                        <button onclick="addToGoogleCalendar()" class="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase rounded-xl transition-all shadow-lg flex items-center justify-center space-x-2">
+                            <span>Add directly to Google Calendar</span>
+                            <span>&rarr;</span>
                         </button>
-                        <button onclick="window.location.reload()" class="text-xs text-zinc-400 hover:text-white underline">
+                        <button onclick="downloadCalendarInvite()" class="w-full py-2.5 px-4 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold text-xs uppercase rounded-xl transition-all">
+                            Download Apple/Outlook (.ics)
+                        </button>
+                        <button onclick="window.location.reload()" class="text-xs text-zinc-400 hover:text-white underline block mx-auto pt-2">
                             Book another session
                         </button>
                     </div>
@@ -354,12 +738,12 @@
                     <div>
                         <label class="block text-xs uppercase font-bold tracking-wider text-zinc-300 mb-2">Select Your Vertical</label>
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                            <button type="button" onclick="setCalcIndustry('law', 15000)" class="calc-ind-btn active py-2.5 px-3 rounded-xl border border-red-500 bg-red-950/40 text-white font-bold text-xs text-center transition-all">⚖️ Law Firm</button>
-                            <button type="button" onclick="setCalcIndustry('realestate', 12000)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🏢 Real Estate</button>
-                            <button type="button" onclick="setCalcIndustry('construction', 35000)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🏗️ Construction</button>
-                            <button type="button" onclick="setCalcIndustry('fitness', 2500)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🏋️ Fitness</button>
-                            <button type="button" onclick="setCalcIndustry('finance', 18000)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">💼 Finance</button>
-                            <button type="button" onclick="setCalcIndustry('others', 10000)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🚀 Others</button>
+                            <button type="button" onclick="setCalcIndustry('law', 15000)" class="calc-ind-btn active py-2.5 px-3 rounded-xl border border-red-500 bg-red-950/40 text-white font-bold text-xs text-center transition-all">Law Firm</button>
+                            <button type="button" onclick="setCalcIndustry('realestate', 12000)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">Real Estate</button>
+                            <button type="button" onclick="setCalcIndustry('construction', 35000)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">Construction</button>
+                            <button type="button" onclick="setCalcIndustry('fitness', 2500)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">Fitness</button>
+                            <button type="button" onclick="setCalcIndustry('finance', 18000)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">Finance</button>
+                            <button type="button" onclick="setCalcIndustry('others', 10000)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">Others</button>
                         </div>
                     </div>
 
@@ -408,7 +792,7 @@
                         <div class="pt-2 border-t border-zinc-900">
                             <span class="text-xs text-emerald-400 block font-medium">Projected Additional Revenue with IKÓNISCH RevOps</span>
                             <span id="out-projected" class="text-3xl font-black text-emerald-400">$67,500 / mo</span>
-                            <p class="text-[10px] text-zinc-400 mt-0.5">Based on automated sub-2 min speed-to-lead & multi-touch nurture.</p>
+                            <p class="text-[10px] text-zinc-400 mt-0.5">Based on automated speed-to-lead & multi-touch nurture.</p>
                         </div>
                     </div>
 
@@ -439,17 +823,28 @@
                         <div class="relative mx-auto max-w-sm rounded-2xl overflow-hidden border border-zinc-700/80 bg-zinc-950 shadow-2xl group">
                             <div class="aspect-[4/5] w-full bg-zinc-950 relative overflow-hidden flex items-center justify-center">
                                 
-                                <!-- Attached Sketch Portrait -->
-                                <img src="image_d7b728.jpg" 
+                                <!-- Founder Sketch Illustration -->
+                                <img id="founder-sketch-img" 
+                                     src="image_d6b805.jpg" 
                                      alt="Founder & Lead RevOps Architect - Sketch" 
-                                     onerror="this.onerror=null; this.src='ChatGPT Image Jul 18, 2026, 09_11_15 PM.png';" 
+                                     onerror="handleImageFallback(this)"
                                      class="w-full h-full object-cover object-top filter contrast-[1.08] brightness-100 group-hover:scale-105 transition-transform duration-700 ease-out">
                                 
+                                <!-- Backup Inline SVG Illustration -->
+                                <div id="sketch-svg-fallback" class="hidden absolute inset-0 bg-zinc-950 flex flex-col items-center justify-center p-6 text-center">
+                                    <svg class="w-32 h-32 text-zinc-600 mb-2 stroke-current" viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                        <path d="M6 11l2-2 4 4 6-6"></path>
+                                    </svg>
+                                    <span class="text-xs font-bold text-zinc-400 uppercase tracking-widest">Architect Sketch</span>
+                                </div>
+
                                 <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent opacity-90"></div>
                                 
                                 <div class="absolute bottom-0 inset-x-0 z-10 text-center p-6">
                                     <span class="inline-block px-3 py-1 bg-amber-500/20 backdrop-blur-md border border-amber-500/40 rounded-full text-[10px] font-black uppercase tracking-widest text-amber-400 mb-2 shadow-lg">
-                                        <i class="fa-solid fa-pen-nib text-amber-400 mr-1 text-[9px]"></i> Direct Founder Leadership
+                                        Direct Founder Leadership
                                     </span>
                                     <span class="text-xl font-black text-white block tracking-tight">LEAD REVOPS ARCHITECT</span>
                                     <span class="text-xs uppercase tracking-widest text-zinc-400 font-semibold block mt-0.5">IKÓNISCH TECH</span>
@@ -461,7 +856,6 @@
                     <!-- Founder Messaging -->
                     <div class="lg:col-span-7 space-y-5">
                         <div class="inline-flex items-center space-x-2 px-3 py-1 bg-red-950/50 rounded-full border border-red-500/30 text-xs font-bold text-red-400 uppercase tracking-widest">
-                            <i class="fa-solid fa-user-shield"></i>
                             <span>No Junior Account Managers</span>
                         </div>
 
@@ -500,13 +894,13 @@
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <span class="px-2.5 py-1 bg-red-950/60 border border-red-800/40 rounded-lg text-[11px] font-bold text-red-400 uppercase">
-                            ⚖️ Law Firm Framework
+                            Law Firm Framework
                         </span>
                         <span class="text-[11px] text-zinc-400 font-mono">120-Day Target</span>
                     </div>
                     <h3 class="text-base font-bold text-white">Automated Case Intake & Retainer Pipeline</h3>
                     <p class="text-sm text-zinc-300 leading-relaxed">
-                        Expected Delivery: Sub-2 minute automated call/SMS response, direct intake screening calendar booking, and pre-qualifying questionnaire.
+                        Expected Delivery: Automated call/SMS intake response, direct intake screening calendar booking, and pre-qualifying questionnaire.
                     </p>
                 </div>
                 <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
@@ -526,7 +920,7 @@
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <span class="px-2.5 py-1 bg-blue-950/60 border border-blue-800/40 rounded-lg text-[11px] font-bold text-blue-400 uppercase">
-                            🏢 Real Estate Framework
+                            Real Estate Framework
                         </span>
                         <span class="text-[11px] text-zinc-400 font-mono">120-Day Target</span>
                     </div>
@@ -552,7 +946,7 @@
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <span class="px-2.5 py-1 bg-amber-950/60 border border-amber-800/40 rounded-lg text-[11px] font-bold text-amber-400 uppercase">
-                            🏗️ Construction Framework
+                            Construction Framework
                         </span>
                         <span class="text-[11px] text-zinc-400 font-mono">120-Day Target</span>
                     </div>
@@ -578,7 +972,7 @@
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <span class="px-2.5 py-1 bg-emerald-950/60 border border-emerald-800/40 rounded-lg text-[11px] font-bold text-emerald-400 uppercase">
-                            🏋️ Fitness Framework
+                            Fitness Framework
                         </span>
                         <span class="text-[11px] text-zinc-400 font-mono">120-Day Target</span>
                     </div>
@@ -604,7 +998,7 @@
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <span class="px-2.5 py-1 bg-purple-950/60 border border-purple-800/40 rounded-lg text-[11px] font-bold text-purple-400 uppercase">
-                            💼 Finance Framework
+                            Finance Framework
                         </span>
                         <span class="text-[11px] text-zinc-400 font-mono">120-Day Target</span>
                     </div>
@@ -630,7 +1024,7 @@
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <span class="px-2.5 py-1 bg-yellow-950/60 border border-yellow-800/40 rounded-lg text-[11px] font-bold text-yellow-400 uppercase">
-                            🚀 Others Framework
+                            Others Framework
                         </span>
                         <span class="text-[11px] text-zinc-400 font-mono">Bespoke Setup</span>
                     </div>
@@ -666,7 +1060,7 @@
                 <div class="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
                     <button onclick="toggleFaq(this)" class="w-full p-4 text-left font-bold text-xs sm:text-sm text-white flex justify-between items-center focus:outline-none">
                         <span>How does territory exclusivity work?</span>
-                        <i class="fa-solid fa-chevron-down text-xs text-zinc-500 transition-transform"></i>
+                        <span class="text-xs text-zinc-500">&darr;</span>
                     </button>
                     <div class="p-4 pt-0 text-xs text-zinc-400 hidden border-t border-zinc-800/60 mt-1">
                         We strictly limit client partnerships to a maximum of 3 non-competing firms per geographic market. Once locked, we never work with direct local competitors in your vertical.
@@ -676,17 +1070,17 @@
                 <div class="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
                     <button onclick="toggleFaq(this)" class="w-full p-4 text-left font-bold text-xs sm:text-sm text-white flex justify-between items-center focus:outline-none">
                         <span>What happens after I schedule a call?</span>
-                        <i class="fa-solid fa-chevron-down text-xs text-zinc-500 transition-transform"></i>
+                        <span class="text-xs text-zinc-500">&darr;</span>
                     </button>
                     <div class="p-4 pt-0 text-xs text-zinc-400 hidden border-t border-zinc-800/60 mt-1">
-                        Your booking confirmation details are routed directly to <strong class="text-amber-400">ikonischtech@gmail.com</strong>. You'll receive instant calendar invitation updates for your chosen slot.
+                        Your booking confirmation details are routed directly to <strong class="text-amber-400">ikonischtech@gmail.com</strong> and <strong class="text-amber-400">abdulhaseebtariq46@gmail.com</strong>. You'll receive instant calendar invitation updates for your chosen slot.
                     </div>
                 </div>
 
                 <div class="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
                     <button onclick="toggleFaq(this)" class="w-full p-4 text-left font-bold text-xs sm:text-sm text-white flex justify-between items-center focus:outline-none">
                         <span>Which CRMs and ad systems do you support?</span>
-                        <i class="fa-solid fa-chevron-down text-xs text-zinc-500 transition-transform"></i>
+                        <span class="text-xs text-zinc-500">&darr;</span>
                     </button>
                     <div class="p-4 pt-0 text-xs text-zinc-400 hidden border-t border-zinc-800/60 mt-1">
                         We integrate with GoHighLevel, HubSpot, Salesforce, Clio, Follow Up Boss, Meta Ads Manager, Google Ads, and custom webhook solutions.
@@ -705,297 +1099,5 @@
         </div>
     </footer>
 
-    <!-- JavaScript Logic for Custom Calendar Engine & Routing -->
-    <script>
-        let userData = {};
-        let selectedDate = null;
-        let selectedTime = null;
-        let currentYear = 2026;
-        let currentMonth = 7; // August (0-indexed)
-
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-        function toggleOtherIndustryField(selectElem) {
-            const otherField = document.getElementById('other-industry-field');
-            if (selectElem.value === 'Others') {
-                otherField.classList.remove('hidden');
-                document.getElementById('user_other_industry').setAttribute('required', 'required');
-            } else {
-                otherField.classList.add('hidden');
-                document.getElementById('user_other_industry').removeAttribute('required');
-            }
-        }
-
-        function handleFormSubmit(e) {
-            e.preventDefault();
-
-            const name = document.getElementById('user_name').value.trim();
-            const email = document.getElementById('user_email').value.trim();
-            const phone = document.getElementById('user_phone').value.trim();
-            let vertical = document.getElementById('user_vertical').value;
-
-            if (vertical === 'Others') {
-                const customInd = document.getElementById('user_other_industry').value.trim();
-                vertical = customInd ? `Others (${customInd})` : 'Others';
-            }
-
-            userData = { name, email, phone, vertical };
-
-            // Update Step 2 Header Pill
-            document.getElementById('summary-name').innerText = name;
-            document.getElementById('summary-contact').innerText = `${email} • ${phone}`;
-            document.getElementById('summary-vertical').innerText = vertical;
-
-            // Transition UI to Step 2 Custom Calendar
-            document.getElementById('top-right-form-wrapper').classList.add('hidden');
-            document.getElementById('booking-container').classList.remove('hidden');
-
-            renderCalendar();
-        }
-
-        function resetFormView() {
-            document.getElementById('booking-container').classList.add('hidden');
-            document.getElementById('top-right-form-wrapper').classList.remove('hidden');
-        }
-
-        function changeMonth(delta) {
-            currentMonth += delta;
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            } else if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            }
-            renderCalendar();
-        }
-
-        function renderCalendar() {
-            document.getElementById('calendar-month-label').innerText = `${monthNames[currentMonth]} ${currentYear}`;
-            const grid = document.getElementById('calendar-days-grid');
-            grid.innerHTML = '';
-
-            const firstDay = new Date(currentYear, currentMonth, 1).getDay(); // 0 is Sun
-            // Shift for Mon start: Mon=0, Tue=1, Wed=2, Thu=3, Fri=4, Sat=5, Sun=6
-            const startOffset = (firstDay === 0) ? 6 : firstDay - 1;
-            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-            // Empty slots for offset
-            for (let i = 0; i < startOffset; i++) {
-                const empty = document.createElement('div');
-                empty.className = 'py-2';
-                grid.appendChild(empty);
-            }
-
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dateObj = new Date(currentYear, currentMonth, day);
-                const dayOfWeek = dateObj.getDay(); // 5 = Friday
-                const isFriday = (dayOfWeek === 5);
-
-                const dayBtn = document.createElement('button');
-                dayBtn.type = 'button';
-                dayBtn.innerText = day;
-                dayBtn.className = `py-2 text-center rounded-lg border border-zinc-800 transition-all font-semibold ${
-                    isFriday 
-                    ? 'cal-day disabled border-red-950/40 text-red-700/60' 
-                    : 'bg-zinc-900 hover:border-blue-500 text-white cursor-pointer'
-                }`;
-
-                if (selectedDate && selectedDate.day === day && selectedDate.month === currentMonth && selectedDate.year === currentYear) {
-                    dayBtn.classList.add('selected');
-                }
-
-                if (isFriday) {
-                    dayBtn.title = 'Friday - Off Day';
-                } else {
-                    dayBtn.onclick = () => selectDate(day, currentMonth, currentYear, dayBtn);
-                }
-
-                grid.appendChild(dayBtn);
-            }
-        }
-
-        function selectDate(day, month, year, elem) {
-            document.querySelectorAll('.cal-day').forEach(b => b.classList.remove('selected'));
-            elem.classList.add('selected');
-
-            selectedDate = { day, month, year, formatted: `${monthNames[month]} ${day}, ${year}` };
-            document.getElementById('selected-date-label').innerText = `${monthNames[month]} ${day}`;
-
-            renderTimeSlots();
-        }
-
-        function renderTimeSlots() {
-            const slotsWrapper = document.getElementById('time-slots-wrapper');
-            slotsWrapper.classList.remove('hidden');
-
-            const nightContainer = document.getElementById('slots-night');
-            const dayContainer = document.getElementById('slots-day');
-            nightContainer.innerHTML = '';
-            dayContainer.innerHTML = '';
-
-            // Night slots: 12:00 AM to 3:00 AM
-            const nightSlots = ["12:00 AM", "12:30 AM", "01:00 AM", "01:30 AM", "02:00 AM", "02:30 AM", "03:00 AM"];
-            
-            // Afternoon/Morning slots: 03:00 PM to 11:30 AM (Spread across PM/AM shifts)
-            const daySlots = [
-                "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM", 
-                "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM", "08:00 PM", "08:30 PM", 
-                "09:00 PM", "09:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM",
-                "08:00 AM", "08:30 AM", "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM"
-            ];
-
-            nightSlots.forEach(time => {
-                const btn = createSlotButton(time);
-                nightContainer.appendChild(btn);
-            });
-
-            daySlots.forEach(time => {
-                const btn = createSlotButton(time);
-                dayContainer.appendChild(btn);
-            });
-        }
-
-        function createSlotButton(timeStr) {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.innerText = timeStr;
-            btn.className = 'time-slot py-1.5 px-2 text-[11px] font-bold bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300 hover:border-blue-500 hover:text-white transition-all text-center';
-
-            if (selectedTime === timeStr) {
-                btn.classList.add('selected');
-            }
-
-            btn.onclick = () => {
-                document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-                btn.classList.add('selected');
-                selectedTime = timeStr;
-
-                // Enable Confirm Button
-                const confirmBtn = document.getElementById('confirm-booking-btn');
-                confirmBtn.removeAttribute('disabled');
-                confirmBtn.innerText = `Confirm Slot: ${selectedDate.formatted} @ ${selectedTime}`;
-                confirmBtn.className = 'w-full py-3.5 px-4 bg-gradient-to-r from-[#ff0500] to-red-700 hover:from-red-600 hover:to-red-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-[0_0_20px_rgba(255,5,0,0.4)] cursor-pointer';
-            };
-
-            return btn;
-        }
-
-        function confirmCustomBooking() {
-            if (!selectedDate || !selectedTime) return;
-
-            const payload = {
-                lead_name: userData.name,
-                lead_email: userData.email,
-                lead_phone: userData.phone,
-                vertical: userData.vertical,
-                booking_date: selectedDate.formatted,
-                booking_time: selectedTime,
-                target_destination: 'ikonischtech@gmail.com',
-                timestamp: new Date().toISOString()
-            };
-
-            // Dispatch notification payload to ikonischtech@gmail.com via FormSubmit API
-            try {
-                fetch('https://formsubmit.co/ajax/ikonischtech@gmail.com', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify(payload)
-                }).catch(() => {});
-            } catch (err) {}
-
-            // Open mailto backup trigger
-            const mailSubject = encodeURIComponent(`New Strategy Call Booking: ${userData.name} (${userData.vertical})`);
-            const mailBody = encodeURIComponent(`New Strategy Booking Details:\n\nName: ${userData.name}\nEmail: ${userData.email}\nPhone: ${userData.phone}\nVertical: ${userData.vertical}\nSelected Slot: ${selectedDate.formatted} @ ${selectedTime}`);
-            const mailUrl = `mailto:ikonischtech@gmail.com?subject=${mailSubject}&body=${mailBody}`;
-            
-            const hiddenLink = document.createElement('a');
-            hiddenLink.href = mailUrl;
-            hiddenLink.target = '_blank';
-            document.body.appendChild(hiddenLink);
-            hiddenLink.click();
-            document.body.removeChild(hiddenLink);
-
-            // Render Confirmation Screen
-            document.getElementById('booking-container').classList.add('hidden');
-            document.getElementById('confirmation-container').classList.remove('hidden');
-
-            document.getElementById('conf-slot-time').innerText = `${selectedDate.formatted} @ ${selectedTime}`;
-            document.getElementById('conf-user-email').innerText = userData.email;
-        }
-
-        function downloadCalendarInvite() {
-            if (!selectedDate || !selectedTime) return;
-
-            const icsData = [
-                'BEGIN:VCALENDAR',
-                'VERSION:2.0',
-                'PRODID:-//IKONISCH TECH//Strategy Session//EN',
-                'BEGIN:VEVENT',
-                `SUMMARY:IKÓNISCH TECH Strategy Call - ${userData.name}`,
-                `DESCRIPTION:Profit Leak Strategy Session with Lead RevOps Architect at IKÓNISCH TECH.\\nAttendee: ${userData.name}\\nPhone: ${userData.phone}`,
-                `LOCATION:Online Strategy Room`,
-                `STATUS:CONFIRMED`,
-                'END:VEVENT',
-                'END:VCALENDAR'
-            ].join('\n');
-
-            const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.setAttribute('download', 'IkonischTech_Strategy_Call.ics');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function toggleFaq(btn) {
-            const content = btn.nextElementSibling;
-            const icon = btn.querySelector('i');
-            content.classList.toggle('hidden');
-            icon.classList.toggle('rotate-180');
-        }
-
-        /* RevOps Revenue Calculator Logic */
-        let currentAvgVal = 15000;
-
-        function setCalcIndustry(ind, avgVal) {
-            document.querySelectorAll('.calc-ind-btn').forEach(btn => {
-                btn.classList.remove('active', 'border-red-500', 'bg-red-950/40', 'text-white');
-                btn.classList.add('border-zinc-800', 'bg-zinc-950', 'text-zinc-400');
-            });
-            event.target.classList.add('active', 'border-red-500', 'bg-red-950/40', 'text-white');
-            event.target.classList.remove('border-zinc-800', 'bg-zinc-950', 'text-zinc-400');
-
-            currentAvgVal = avgVal;
-            document.getElementById('calc-value').value = avgVal;
-            updateCalculator();
-        }
-
-        function updateCalculator() {
-            const leads = parseInt(document.getElementById('calc-leads').value);
-            const value = parseInt(document.getElementById('calc-value').value);
-            const dropRate = parseFloat(document.getElementById('calc-response').value);
-
-            document.getElementById('calc-leads-val').innerText = `${leads} Leads/mo`;
-            document.getElementById('calc-value-val').innerText = `$${value.toLocaleString()}`;
-
-            // Calculations
-            const leakedLeads = Math.round(leads * dropRate);
-            const leakedRevenue = leakedLeads * value;
-            
-            // Projected new revenue captured by automated RevOps intake
-            const capturedLeads = Math.round(leads * 0.15); 
-            const projectedRevenue = Math.max(leakedRevenue, capturedLeads * value);
-
-            document.getElementById('out-leaked').innerText = `$${leakedRevenue.toLocaleString()} / mo`;
-            document.getElementById('out-projected').innerText = `$${projectedRevenue.toLocaleString()} / mo`;
-        }
-
-        // Initialize calculator on page load
-        window.addEventListener('DOMContentLoaded', () => {
-            updateCalculator();
-        });
-    </script>
 </body>
 </html>
