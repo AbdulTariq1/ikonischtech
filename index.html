@@ -14,6 +14,10 @@
                             red: '#ef4444',
                             redAccent: '#ff0500',
                             redDark: '#dc2626',
+                            blue: '#3b82f6',
+                            blueDark: '#1d4ed8',
+                            yellow: '#eab308',
+                            yellowDark: '#ca8a04',
                             bgDark: '#09090b',
                             cardDark: '#121215',
                             borderDark: '#27272a'
@@ -29,10 +33,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Calendly Widget Assets -->
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
     <style>
         body {
@@ -59,8 +59,8 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .text-gradient-red {
-            background: linear-gradient(135deg, #f87171 0%, #ff0500 50%, #dc2626 100%);
+        .text-gradient-brand {
+            background: linear-gradient(135deg, #ff0500 0%, #3b82f6 50%, #eab308 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -73,15 +73,33 @@
             cursor: pointer;
             box-shadow: 0 0 10px rgba(255, 5, 0, 0.6);
         }
+        .cal-day.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            background-color: rgba(24, 24, 27, 0.5);
+        }
+        .cal-day.selected {
+            background-color: #ff0500;
+            color: #ffffff;
+            font-weight: 800;
+            border-color: #ff0500;
+            box-shadow: 0 0 15px rgba(255, 5, 0, 0.5);
+        }
+        .time-slot.selected {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-color: #3b82f6;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+        }
     </style>
 </head>
 <body class="selection:bg-red-600 selection:text-white antialiased">
 
-    <!-- Urgency Top Banner -->
-    <div class="bg-gradient-to-r from-red-950 via-zinc-950 to-red-950 border-b border-red-900/40 text-center py-2 px-4 text-xs font-semibold uppercase tracking-widest text-red-400 relative z-50">
+    <!-- Top Urgency Banner -->
+    <div class="bg-gradient-to-r from-red-950 via-blue-950 to-zinc-950 border-b border-red-900/40 text-center py-2 px-4 text-xs font-semibold uppercase tracking-widest text-red-400 relative z-50">
         <div class="max-w-7xl mx-auto flex items-center justify-center space-x-2">
             <span class="inline-block h-2 w-2 rounded-full bg-red-500 animate-ping"></span>
-            <span>Territory Limit: Max 3 Firms per Region. <span class="text-white underline decoration-red-500 underline-offset-2 hidden sm:inline">1 Spot Available for Q3</span></span>
+            <span>Territory Limit: Max 3 Firms per Region. <span class="text-amber-400 underline decoration-amber-500 underline-offset-2 hidden sm:inline font-bold">1 Spot Available for Q3</span></span>
         </div>
     </div>
 
@@ -99,16 +117,16 @@
             <!-- Navigation Links -->
             <nav class="hidden md:flex items-center space-x-8 text-xs uppercase font-bold tracking-wider text-zinc-400">
                 <a href="#hero-section" class="hover:text-white transition-colors">Book Call</a>
-                <a href="#calculator-section" class="hover:text-white transition-colors">Revenue Calculator</a>
-                <a href="#founder-section" class="hover:text-white transition-colors">About Founder</a>
+                <a href="#calculator-section" class="hover:text-blue-400 transition-colors">Revenue Calculator</a>
+                <a href="#founder-section" class="hover:text-amber-400 transition-colors">About Founder</a>
                 <a href="#projections-section" class="hover:text-white transition-colors">Delivery Model</a>
                 <a href="#faq-section" class="hover:text-white transition-colors">FAQ</a>
             </nav>
 
             <!-- Navigation CTA -->
             <div class="flex items-center space-x-3">
-                <a href="#hero-section" class="py-2.5 px-4 bg-[#ff0500] hover:bg-red-700 text-white font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(255,5,0,0.4)]">
-                    Schedule Strategy Call
+                <a href="#hero-section" class="py-2.5 px-4 bg-gradient-to-r from-[#ff0500] to-red-700 hover:from-red-600 hover:to-red-800 text-white font-bold text-xs rounded-xl transition-all shadow-[0_0_15px_rgba(255,5,0,0.4)]">
+                    Book Strategy Call
                 </a>
             </div>
         </div>
@@ -122,9 +140,16 @@
             <!-- Left Column: Core Value Proposition -->
             <div class="lg:col-span-7 space-y-6">
                 
-                <div class="inline-flex items-center space-x-2 px-3 py-1 bg-red-950/40 rounded-full border border-red-500/30 text-xs font-semibold tracking-wider text-red-400 uppercase">
-                    <i class="fa-solid fa-layer-group text-[10px]"></i>
-                    <span>Law Firms • Real Estate • Construction • Gyms</span>
+                <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 bg-zinc-900/90 rounded-full border border-zinc-700/80 text-xs font-semibold tracking-wider uppercase">
+                    <span class="text-red-500 font-bold">Law</span>
+                    <span class="text-zinc-600">•</span>
+                    <span class="text-blue-400 font-bold">Real Estate</span>
+                    <span class="text-zinc-600">•</span>
+                    <span class="text-amber-400 font-bold">Construction</span>
+                    <span class="text-zinc-600">•</span>
+                    <span class="text-emerald-400 font-bold">Fitness</span>
+                    <span class="text-zinc-600">•</span>
+                    <span class="text-purple-400 font-bold">Finance</span>
                 </div>
 
                 <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
@@ -137,20 +162,20 @@
 
                 <!-- Key Benefits -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs sm:text-sm text-zinc-300">
-                    <div class="flex items-center space-x-3 bg-zinc-900/70 p-3.5 rounded-xl border border-zinc-800/80">
-                        <i class="fa-solid fa-bolt text-[#ff0500] text-sm"></i>
+                    <div class="flex items-center space-x-3 bg-zinc-900/80 p-3.5 rounded-xl border border-zinc-800/80 hover:border-blue-500/40 transition-colors">
+                        <i class="fa-solid fa-bolt text-[#ff0500] text-base"></i>
                         <span>Sub-2 minute automated CRM response so leads never go cold.</span>
                     </div>
 
-                    <div class="flex items-center space-x-3 bg-zinc-900/70 p-3.5 rounded-xl border border-zinc-800/80">
-                        <i class="fa-solid fa-shield-halved text-[#ff0500] text-sm"></i>
-                        <span>Enforced territory exclusivity with a maximum of 3 firms per region.</span>
+                    <div class="flex items-center space-x-3 bg-zinc-900/80 p-3.5 rounded-xl border border-zinc-800/80 hover:border-amber-500/40 transition-colors">
+                        <i class="fa-solid fa-shield-halved text-amber-400 text-base"></i>
+                        <span>Enforced territory exclusivity with max 3 firms per region.</span>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Right Column: Lead Form & Auto-Prefilled Calendly Widget -->
+            <!-- Right Column: Lead Form & Custom Interactive Booking System -->
             <div class="lg:col-span-5 bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl relative">
                 
                 <!-- STEP 1: Direct Contact Form -->
@@ -160,11 +185,11 @@
                             <span class="text-xs uppercase font-extrabold tracking-widest text-[#ff0500]">Step 1 of 2</span>
                             <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
                         </div>
-                        <h2 class="text-2xl font-black text-white">Reserve Your Strategy Call</h2>
-                        <p class="text-xs text-zinc-400">Fill in your details once below. They will be automatically populated in the calendar booking page.</p>
+                        <h2 class="text-2xl font-black text-white">Reserve Strategy Consultation</h2>
+                        <p class="text-xs text-zinc-400">Fill details below to unlock available strategy call slots.</p>
                     </div>
 
-                    <form id="lead-capture-form" class="space-y-4" onsubmit="handleFormSubmit(event)">
+                    <form id="lead-capture-form" class="space-y-3.5" onsubmit="handleFormSubmit(event)">
                         <div>
                             <label class="block text-[11px] uppercase font-bold tracking-wider text-zinc-300 mb-1">Full Name</label>
                             <input type="text" id="user_name" placeholder="Johnathan Doe" class="w-full bg-zinc-950 border border-zinc-800 text-sm text-white rounded-xl px-4 py-3 outline-none focus:border-[#ff0500] transition-colors" required>
@@ -180,34 +205,129 @@
                             <input type="tel" id="user_phone" placeholder="+1 (555) 000-0000" class="w-full bg-zinc-950 border border-zinc-800 text-sm text-white rounded-xl px-4 py-3 outline-none focus:border-[#ff0500] transition-colors" required>
                         </div>
 
-                        <button type="submit" class="w-full py-3.5 px-4 bg-[#ff0500] hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-[0_0_20px_rgba(255,5,0,0.4)] flex items-center justify-center space-x-2">
-                            <span>Continue to Calendar Booking</span>
+                        <div>
+                            <label class="block text-[11px] uppercase font-bold tracking-wider text-zinc-300 mb-1">Industry Vertical</label>
+                            <select id="user_vertical" onchange="toggleOtherIndustryField(this)" class="w-full bg-zinc-950 border border-zinc-800 text-xs text-white rounded-xl px-4 py-3 outline-none focus:border-[#ff0500] transition-colors" required>
+                                <option value="Law Firm">Law Firm</option>
+                                <option value="Real Estate">Real Estate</option>
+                                <option value="Construction">Construction</option>
+                                <option value="Fitness">Fitness</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Others">Others (Specify below)</option>
+                            </select>
+                        </div>
+
+                        <div id="other-industry-field" class="hidden">
+                            <label class="block text-[11px] uppercase font-bold tracking-wider text-amber-400 mb-1">Specify Your Industry Name</label>
+                            <input type="text" id="user_other_industry" placeholder="e.g. Healthcare, SaaS, Logistics..." class="w-full bg-zinc-950 border border-amber-500/50 text-sm text-white rounded-xl px-4 py-3 outline-none focus:border-amber-400 transition-colors">
+                        </div>
+
+                        <button type="submit" class="w-full py-4 px-4 bg-gradient-to-r from-[#ff0500] via-red-600 to-red-700 hover:from-red-600 hover:to-red-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-[0_0_20px_rgba(255,5,0,0.4)] flex items-center justify-center space-x-2">
+                            <span>Book my Profit Leak Strategy Call now</span>
                             <i class="fa-solid fa-arrow-right text-xs"></i>
                         </button>
                     </form>
-
-                    <!-- Direct Calendar Access -->
-                    <div class="text-center pt-2 border-t border-zinc-800/80">
-                        <button onclick="showCalendarDirectly()" class="text-xs text-zinc-400 hover:text-white transition-colors underline underline-offset-2">
-                            Or open calendar directly without prefilling
-                        </button>
-                    </div>
                 </div>
 
-                <!-- STEP 2: Embedded Calendly Widget Container -->
+                <!-- STEP 2: Custom Interactive Booking Engine (12am-3am & 3pm-11:30am, Mon-Sun, Fri Off) -->
                 <div id="booking-container" class="hidden space-y-4">
                     <div class="flex justify-between items-center pb-2 border-b border-zinc-800">
                         <div>
-                            <span class="text-xs uppercase font-extrabold tracking-widest text-emerald-400">Step 2 of 2</span>
-                            <h3 class="text-base font-bold text-white">Select Consultation Time</h3>
+                            <span class="text-xs uppercase font-extrabold tracking-widest text-blue-400">Step 2 of 2</span>
+                            <h3 class="text-base font-bold text-white">Select Date & Time Slot</h3>
                         </div>
                         <button onclick="resetFormView()" class="text-[11px] text-zinc-400 hover:text-white underline">
-                            <i class="fa-solid fa-arrow-left mr-1"></i> Edit Details
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Edit Lead Info
                         </button>
                     </div>
 
-                    <!-- Dynamic Calendly Mount Point -->
-                    <div id="calendly-embed-slot" class="w-full rounded-xl overflow-hidden bg-zinc-950 min-h-[600px]"></div>
+                    <!-- User Summary Pill -->
+                    <div class="p-3 bg-zinc-950 border border-zinc-800 rounded-xl flex items-center justify-between text-xs">
+                        <div>
+                            <span id="summary-name" class="font-bold text-white block">John Doe</span>
+                            <span id="summary-contact" class="text-zinc-400 text-[11px]">john@firm.com</span>
+                        </div>
+                        <span id="summary-vertical" class="px-2 py-0.5 bg-red-950 text-red-400 border border-red-800/60 rounded text-[10px] font-bold uppercase">Law Firm</span>
+                    </div>
+
+                    <!-- Custom Calendar Widget -->
+                    <div class="space-y-4 bg-zinc-950 p-4 rounded-xl border border-zinc-800">
+                        
+                        <!-- Month Header -->
+                        <div class="flex justify-between items-center text-xs font-bold text-white">
+                            <button onclick="changeMonth(-1)" class="p-1.5 hover:bg-zinc-800 rounded"><i class="fa-solid fa-chevron-left"></i></button>
+                            <span id="calendar-month-label" class="uppercase tracking-wider text-amber-400 font-extrabold">August 2026</span>
+                            <button onclick="changeMonth(1)" class="p-1.5 hover:bg-zinc-800 rounded"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+
+                        <!-- Days Grid Header -->
+                        <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-zinc-500 uppercase">
+                            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span class="text-red-500">Fri (Off)</span><span>Sat</span><span>Sun</span>
+                        </div>
+
+                        <!-- Calendar Days Grid -->
+                        <div id="calendar-days-grid" class="grid grid-cols-7 gap-1 text-xs">
+                            <!-- Dynamic Day Buttons JS -->
+                        </div>
+
+                        <!-- Available Time Slots Section -->
+                        <div id="time-slots-wrapper" class="hidden pt-3 border-t border-zinc-800/80 space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[11px] uppercase font-bold tracking-wider text-zinc-300">Available Times for <span id="selected-date-label" class="text-blue-400">Aug 10</span></span>
+                                <span class="text-[10px] text-zinc-500">(All Slots Active)</span>
+                            </div>
+
+                            <div class="space-y-2">
+                                <span class="text-[10px] uppercase font-bold text-amber-400 block">Night Session (12:00 AM - 3:00 AM)</span>
+                                <div id="slots-night" class="grid grid-cols-3 gap-1.5"></div>
+
+                                <span class="text-[10px] uppercase font-bold text-blue-400 block pt-1">Afternoon / Morning Session (3:00 PM - 11:30 AM)</span>
+                                <div id="slots-day" class="grid grid-cols-3 gap-1.5 max-h-40 overflow-y-auto pr-1"></div>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Booking Button -->
+                        <button id="confirm-booking-btn" disabled onclick="confirmCustomBooking()" class="w-full py-3 px-4 bg-zinc-800 text-zinc-500 font-bold text-xs uppercase tracking-wider rounded-xl transition-all cursor-not-allowed">
+                            Select a Date & Time Slot
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- STEP 3: Booking Confirmation Screen -->
+                <div id="confirmation-container" class="hidden space-y-5 text-center py-6">
+                    <div class="w-16 h-16 bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-2xl animate-bounce">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h3 class="text-2xl font-black text-white">Strategy Session Confirmed!</h3>
+                        <p class="text-xs text-zinc-300">Your details and selected slot have been sent directly to <span class="text-amber-400 font-bold">ikonischtech@gmail.com</span>.</p>
+                    </div>
+
+                    <div class="p-4 bg-zinc-950 border border-zinc-800 rounded-xl text-left space-y-2 text-xs">
+                        <div class="flex justify-between text-zinc-400">
+                            <span>Reserved Slot:</span>
+                            <span id="conf-slot-time" class="font-bold text-blue-400">Mon, Aug 10 @ 3:30 PM</span>
+                        </div>
+                        <div class="flex justify-between text-zinc-400">
+                            <span>Attendee Email:</span>
+                            <span id="conf-user-email" class="font-bold text-white">john@firm.com</span>
+                        </div>
+                        <div class="flex justify-between text-zinc-400">
+                            <span>Lead Architect:</span>
+                            <span class="font-bold text-red-400">Founder, IKÓNISCH TECH</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 pt-2">
+                        <button onclick="downloadCalendarInvite()" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase rounded-xl transition-all">
+                            <i class="fa-solid fa-calendar-plus mr-2"></i> Add Event to Calendar (.ics)
+                        </button>
+                        <button onclick="window.location.reload()" class="text-xs text-zinc-400 hover:text-white underline">
+                            Book another session
+                        </button>
+                    </div>
                 </div>
 
             </div>
@@ -215,12 +335,12 @@
         </div>
     </main>
 
-    <!-- NEW SECTION: Interactive Revenue & Pipeline Leakage Calculator -->
+    <!-- Interactive Revenue & Pipeline Leakage Calculator -->
     <section id="calculator-section" class="border-t border-zinc-900 bg-zinc-950 py-16 px-4 sm:px-6">
         <div class="max-w-5xl mx-auto">
             
             <div class="text-center max-w-2xl mx-auto mb-12">
-                <span class="text-xs uppercase tracking-widest font-bold text-[#ff0500]">Pipeline Diagnostic Tool</span>
+                <span class="text-xs uppercase tracking-widest font-bold text-blue-400">Pipeline Diagnostic Tool</span>
                 <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">Calculate Your Expected Revenue Growth</h2>
                 <p class="text-xs sm:text-sm text-zinc-400 mt-2">See how much revenue your firm is losing to manual follow-up delay and how RevOps automation converts lost prospects into profit.</p>
             </div>
@@ -233,11 +353,13 @@
                     <!-- Industry Selector -->
                     <div>
                         <label class="block text-xs uppercase font-bold tracking-wider text-zinc-300 mb-2">Select Your Vertical</label>
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            <button type="button" onclick="setCalcIndustry('law', 15000, 0.15)" class="calc-ind-btn active py-2.5 px-3 rounded-xl border border-red-500 bg-red-950/40 text-white font-bold text-xs text-center transition-all">⚖️ Law Firm</button>
-                            <button type="button" onclick="setCalcIndustry('realestate', 12000, 0.20)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🏢 Real Estate</button>
-                            <button type="button" onclick="setCalcIndustry('construction', 35000, 0.10)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🏗️ Construction</button>
-                            <button type="button" onclick="setCalcIndustry('gym', 1800, 0.25)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🏋️ Gym Chains</button>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                            <button type="button" onclick="setCalcIndustry('law', 15000)" class="calc-ind-btn active py-2.5 px-3 rounded-xl border border-red-500 bg-red-950/40 text-white font-bold text-xs text-center transition-all">⚖️ Law Firm</button>
+                            <button type="button" onclick="setCalcIndustry('realestate', 12000)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🏢 Real Estate</button>
+                            <button type="button" onclick="setCalcIndustry('construction', 35000)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🏗️ Construction</button>
+                            <button type="button" onclick="setCalcIndustry('fitness', 2500)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🏋️ Fitness</button>
+                            <button type="button" onclick="setCalcIndustry('finance', 18000)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">💼 Finance</button>
+                            <button type="button" onclick="setCalcIndustry('others', 10000)" class="calc-ind-btn py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-400 font-bold text-xs text-center hover:border-zinc-700 transition-all">🚀 Others</button>
                         </div>
                     </div>
 
@@ -290,7 +412,7 @@
                         </div>
                     </div>
 
-                    <a href="#hero-section" class="w-full py-3 px-4 bg-[#ff0500] hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-[0_0_15px_rgba(255,5,0,0.4)] text-center block">
+                    <a href="#hero-section" class="w-full py-3.5 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)] text-center block">
                         Capture This Revenue Now
                     </a>
                 </div>
@@ -299,35 +421,35 @@
         </div>
     </section>
 
-    <!-- Founder Section (With Sketch Portrait) -->
+    <!-- Founder Section (Featuring Updated Sketch Drawing) -->
     <section id="founder-section" class="border-t border-zinc-900 bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 py-16 px-4 sm:px-6 relative overflow-hidden">
         <div class="max-w-7xl mx-auto">
             <div class="bg-zinc-900/90 border border-zinc-800 rounded-3xl p-6 sm:p-10 relative overflow-hidden shadow-2xl">
                 
                 <!-- Glow elements -->
                 <div class="absolute -top-24 -left-24 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-red-900/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none"></div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
                     
                     <!-- Founder Sketch Image Container -->
                     <div class="lg:col-span-5 relative">
-                        <div class="absolute -inset-1 bg-gradient-to-r from-red-600/30 via-red-900/20 to-zinc-800 rounded-3xl blur-lg opacity-70"></div>
+                        <div class="absolute -inset-1 bg-gradient-to-r from-red-600/30 via-blue-600/30 to-amber-500/20 rounded-3xl blur-lg opacity-70"></div>
                         
                         <div class="relative mx-auto max-w-sm rounded-2xl overflow-hidden border border-zinc-700/80 bg-zinc-950 shadow-2xl group">
                             <div class="aspect-[4/5] w-full bg-zinc-950 relative overflow-hidden flex items-center justify-center">
                                 
-                                <!-- Founder Sketch Illustration -->
-                                <img src="ChatGPT Image Jul 18, 2026, 09_11_15 PM.png" 
-                                     alt="Founder & Chief RevOps Architect - Sketch Edition" 
-                                     onerror="this.onerror=null; this.src='ChatGPT Image Jul 19, 2026, 01_27_23 AM.png';" 
+                                <!-- Attached Sketch Portrait -->
+                                <img src="image_d7b728.jpg" 
+                                     alt="Founder & Lead RevOps Architect - Sketch" 
+                                     onerror="this.onerror=null; this.src='ChatGPT Image Jul 18, 2026, 09_11_15 PM.png';" 
                                      class="w-full h-full object-cover object-top filter contrast-[1.08] brightness-100 group-hover:scale-105 transition-transform duration-700 ease-out">
                                 
                                 <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent opacity-90"></div>
                                 
                                 <div class="absolute bottom-0 inset-x-0 z-10 text-center p-6">
-                                    <span class="inline-block px-3 py-1 bg-red-500/20 backdrop-blur-md border border-red-500/40 rounded-full text-[10px] font-black uppercase tracking-widest text-red-400 mb-2 shadow-lg">
-                                        <i class="fa-solid fa-pen-nib text-red-500 mr-1 text-[9px]"></i> Direct Founder Leadership
+                                    <span class="inline-block px-3 py-1 bg-amber-500/20 backdrop-blur-md border border-amber-500/40 rounded-full text-[10px] font-black uppercase tracking-widest text-amber-400 mb-2 shadow-lg">
+                                        <i class="fa-solid fa-pen-nib text-amber-400 mr-1 text-[9px]"></i> Direct Founder Leadership
                                     </span>
                                     <span class="text-xl font-black text-white block tracking-tight">LEAD REVOPS ARCHITECT</span>
                                     <span class="text-xs uppercase tracking-widest text-zinc-400 font-semibold block mt-0.5">IKÓNISCH TECH</span>
@@ -366,12 +488,12 @@
     <!-- Delivery Models & Financial Projections Section -->
     <section id="projections-section" class="max-w-7xl mx-auto px-4 sm:px-6 py-20">
         <div class="text-center max-w-2xl mx-auto mb-12">
-            <span class="text-xs uppercase tracking-widest font-bold text-[#ff0500]">System Delivery Architecture</span>
+            <span class="text-xs uppercase tracking-widest font-bold text-amber-400">System Delivery Architecture</span>
             <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">Expected Delivery & Revenue Projections</h2>
             <p class="text-xs sm:text-sm text-zinc-400 mt-2">How our RevOps framework and ad pipelines deliver structured financial growth across target industries.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             
             <!-- Law Firm Projections -->
             <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-red-500/40 transition-colors">
@@ -384,7 +506,7 @@
                     </div>
                     <h3 class="text-base font-bold text-white">Automated Case Intake & Retainer Pipeline</h3>
                     <p class="text-sm text-zinc-300 leading-relaxed">
-                        Expected Delivery: Sub-2 minute automated phone call and SMS trigger upon web form submission, direct intake screening calendar booking, and pre-qualifying questionnaire.
+                        Expected Delivery: Sub-2 minute automated call/SMS response, direct intake screening calendar booking, and pre-qualifying questionnaire.
                     </p>
                 </div>
                 <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
@@ -394,85 +516,137 @@
                     </div>
                     <div class="text-right">
                         <span class="text-lg font-black text-emerald-400 block">+$120k–$180k</span>
-                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Contracted Value Projection</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Contract Projection</span>
                     </div>
                 </div>
             </div>
 
             <!-- Real Estate Projections -->
-            <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-red-500/40 transition-colors">
+            <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-blue-500/40 transition-colors">
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
-                        <span class="px-2.5 py-1 bg-red-950/60 border border-red-800/40 rounded-lg text-[11px] font-bold text-red-400 uppercase">
+                        <span class="px-2.5 py-1 bg-blue-950/60 border border-blue-800/40 rounded-lg text-[11px] font-bold text-blue-400 uppercase">
                             🏢 Real Estate Framework
                         </span>
                         <span class="text-[11px] text-zinc-400 font-mono">120-Day Target</span>
                     </div>
-                    <h3 class="text-base font-bold text-white">Exclusive Seller & Commercial Listing Engine</h3>
+                    <h3 class="text-base font-bold text-white">Exclusive Listing & Seller Engine</h3>
                     <p class="text-sm text-zinc-300 leading-relaxed">
-                        Expected Delivery: Localized valuation campaign ads, automated property report delivery via SMS, instant agent routing, and automated calendar follow-ups.
+                        Expected Delivery: Valuation ads, automated property report delivery via SMS, instant agent routing, and calendar follow-ups.
                     </p>
                 </div>
                 <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
                     <div>
                         <span class="text-xs font-bold text-white block">Projected Capacity</span>
-                        <span class="text-xs text-zinc-400">4–8 Listing Consultations / mo</span>
+                        <span class="text-xs text-zinc-400">4–8 Consultations / mo</span>
                     </div>
                     <div class="text-right">
                         <span class="text-lg font-black text-emerald-400 block">4.5x–6.0x</span>
-                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Target ROAS Benchmark</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Target ROAS</span>
                     </div>
                 </div>
             </div>
 
             <!-- Construction Firm Projections -->
-            <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-red-500/40 transition-colors">
+            <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-amber-500/40 transition-colors">
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
-                        <span class="px-2.5 py-1 bg-red-950/60 border border-red-800/40 rounded-lg text-[11px] font-bold text-red-400 uppercase">
+                        <span class="px-2.5 py-1 bg-amber-950/60 border border-amber-800/40 rounded-lg text-[11px] font-bold text-amber-400 uppercase">
                             🏗️ Construction Framework
                         </span>
                         <span class="text-[11px] text-zinc-400 font-mono">120-Day Target</span>
                     </div>
-                    <h3 class="text-base font-bold text-white">High-Ticket Contract & Estimator Funnel</h3>
+                    <h3 class="text-base font-bold text-white">High-Ticket Estimator Funnel</h3>
                     <p class="text-sm text-zinc-300 leading-relaxed">
-                        Expected Delivery: Automated qualification wizard screening project budgets ($25k+), digital portfolio nurture sequence, and estimator calendar booking.
+                        Expected Delivery: Qualification wizard screening project budgets ($25k+), digital portfolio nurture, and estimator booking.
                     </p>
                 </div>
                 <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
                     <div>
                         <span class="text-xs font-bold text-white block">Projected Capacity</span>
-                        <span class="text-xs text-zinc-400">3–6 Commercial & Remodel Contracts</span>
+                        <span class="text-xs text-zinc-400">3–6 Commercial Contracts</span>
                     </div>
                     <div class="text-right">
                         <span class="text-lg font-black text-emerald-400 block">+$150k–$300k</span>
-                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Contract Value Projection</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Contract Projection</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Gym / Fitness Projections -->
-            <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-red-500/40 transition-colors">
+            <!-- Fitness Projections -->
+            <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-emerald-500/40 transition-colors">
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
-                        <span class="px-2.5 py-1 bg-red-950/60 border border-red-800/40 rounded-lg text-[11px] font-bold text-red-400 uppercase">
-                            🏋️ Gym Chain Framework
+                        <span class="px-2.5 py-1 bg-emerald-950/60 border border-emerald-800/40 rounded-lg text-[11px] font-bold text-emerald-400 uppercase">
+                            🏋️ Fitness Framework
                         </span>
                         <span class="text-[11px] text-zinc-400 font-mono">120-Day Target</span>
                     </div>
-                    <h3 class="text-base font-bold text-white">Recurring High-Value Membership & PT Funnel</h3>
+                    <h3 class="text-base font-bold text-white">High-LTV Membership Funnel</h3>
                     <p class="text-sm text-zinc-300 leading-relaxed">
-                        Expected Delivery: Geo-targeted fitness challenge ads, automated SMS check-ins, instant orientation booking, and automated trial-to-paid conversion workflows.
+                        Expected Delivery: Geo-targeted fitness challenge ads, automated SMS check-ins, orientation booking, and trial conversion workflows.
                     </p>
                 </div>
                 <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
                     <div>
                         <span class="text-xs font-bold text-white block">Projected Capacity</span>
-                        <span class="text-xs text-zinc-400">40–80 High-LTV Memberships / mo</span>
+                        <span class="text-xs text-zinc-400">40–80 Memberships / mo</span>
                     </div>
                     <div class="text-right">
                         <span class="text-lg font-black text-emerald-400 block">+$40k–$60k</span>
-                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Annual Recurring Value</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Recurring LTV</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Finance Projections -->
+            <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-purple-500/40 transition-colors">
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="px-2.5 py-1 bg-purple-950/60 border border-purple-800/40 rounded-lg text-[11px] font-bold text-purple-400 uppercase">
+                            💼 Finance Framework
+                        </span>
+                        <span class="text-[11px] text-zinc-400 font-mono">120-Day Target</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white">Advisory & Capital Acquisition Pipeline</h3>
+                    <p class="text-sm text-zinc-300 leading-relaxed">
+                        Expected Delivery: High-net-worth client lead magnets, automated compliance-friendly email drip, and direct partner strategy scheduling.
+                    </p>
+                </div>
+                <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
+                    <div>
+                        <span class="text-xs font-bold text-white block">Projected Capacity</span>
+                        <span class="text-xs text-zinc-400">8–15 High-AUM Advisory Clients</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-lg font-black text-emerald-400 block">+$100k+</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Annual Retainer Value</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom / Others Projections -->
+            <div class="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-yellow-500/40 transition-colors">
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="px-2.5 py-1 bg-yellow-950/60 border border-yellow-800/40 rounded-lg text-[11px] font-bold text-yellow-400 uppercase">
+                            🚀 Others Framework
+                        </span>
+                        <span class="text-[11px] text-zinc-400 font-mono">Bespoke Setup</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white">Custom RevOps & Ad Architecture</h3>
+                    <p class="text-sm text-zinc-300 leading-relaxed">
+                        Expected Delivery: Tailored pipeline mapping specifically built around your custom sales cycle, CRM software, and local service offerings.
+                    </p>
+                </div>
+                <div class="pt-4 border-t border-zinc-800/80 flex justify-between items-end">
+                    <div>
+                        <span class="text-xs font-bold text-white block">Projected Capacity</span>
+                        <span class="text-xs text-zinc-400">Custom Growth Blueprint</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-lg font-black text-emerald-400 block">Tailored</span>
+                        <span class="text-[10px] text-zinc-400 uppercase font-semibold">Growth Strategy</span>
                     </div>
                 </div>
             </div>
@@ -505,7 +679,7 @@
                         <i class="fa-solid fa-chevron-down text-xs text-zinc-500 transition-transform"></i>
                     </button>
                     <div class="p-4 pt-0 text-xs text-zinc-400 hidden border-t border-zinc-800/60 mt-1">
-                        You'll receive instant calendar confirmation and a meeting link sent to your email. Our team reviews your local territory metrics prior to the call to present a custom acquisition plan.
+                        Your booking confirmation details are routed directly to <strong class="text-amber-400">ikonischtech@gmail.com</strong>. You'll receive instant calendar invitation updates for your chosen slot.
                     </div>
                 </div>
 
@@ -526,86 +700,253 @@
     <footer class="bg-zinc-950 border-t border-zinc-900 py-10 px-4 text-center text-xs text-zinc-500">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
             <span class="font-bold text-white uppercase tracking-wider">IKÓNISCH TECH</span>
-            <span>Direct Inquiries: <a href="mailto:ikonischtech@gmail.com" class="text-red-400 hover:underline">ikonischtech@gmail.com</a></span>
+            <span>Direct Inquiries: <a href="mailto:ikonischtech@gmail.com" class="text-red-400 hover:underline font-bold">ikonischtech@gmail.com</a></span>
             <span>© 2026 IKÓNISCH TECH Systems. All rights reserved.</span>
         </div>
     </footer>
 
-    <!-- JavaScript Handling Form Submission & Prefilled Calendly Integration -->
+    <!-- JavaScript Logic for Custom Calendar Engine & Routing -->
     <script>
-        const baseUrl = "https://calendly.com/ikonischtech/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=ff0500";
+        let userData = {};
+        let selectedDate = null;
+        let selectedTime = null;
+        let currentYear = 2026;
+        let currentMonth = 7; // August (0-indexed)
 
-        function handleFormSubmit(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('user_name').value.trim();
-            const email = document.getElementById('user_email').value.trim();
-            const phone = document.getElementById('user_phone').value.trim();
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-            if (!name || !email) return;
-
-            // Optional: Backup email dispatch via FormSubmit service to ensure lead notification reaches ikonischtech@gmail.com
-            try {
-                fetch('https://formsubmit.co/ajax/ikonischtech@gmail.com', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify({ name: name, email: email, phone: phone, source: 'IKÓNISCH TECH Landing Page Form' })
-                }).catch(() => {});
-            } catch (e) {}
-
-            // Hide initial form wrapper and reveal Calendly widget container
-            document.getElementById('top-right-form-wrapper').classList.add('hidden');
-            const bookingContainer = document.getElementById('booking-container');
-            bookingContainer.classList.remove('hidden');
-
-            const slot = document.getElementById('calendly-embed-slot');
-            slot.innerHTML = ''; // Clear existing instance
-
-            // Initialize Calendly with prefilled user data so they DON'T re-type anything
-            if (window.Calendly) {
-                Calendly.initInlineWidget({
-                    url: baseUrl,
-                    parentElement: slot,
-                    prefill: {
-                        name: name,
-                        email: email,
-                        customAnswers: {
-                            a1: phone // Passes phone number to Calendly custom answer field
-                        }
-                    }
-                });
+        function toggleOtherIndustryField(selectElem) {
+            const otherField = document.getElementById('other-industry-field');
+            if (selectElem.value === 'Others') {
+                otherField.classList.remove('hidden');
+                document.getElementById('user_other_industry').setAttribute('required', 'required');
             } else {
-                // Fallback URL query parameters if widget script delay
-                const encodedName = encodeURIComponent(name);
-                const encodedEmail = encodeURIComponent(email);
-                const encodedPhone = encodeURIComponent(phone);
-                const fullUrl = `${baseUrl}&name=${encodedName}&email=${encodedEmail}&a1=${encodedPhone}`;
-                
-                slot.innerHTML = `<div class="calendly-inline-widget" data-url="${fullUrl}" style="min-width:320px;height:650px;"></div>`;
+                otherField.classList.add('hidden');
+                document.getElementById('user_other_industry').removeAttribute('required');
             }
         }
 
-        function showCalendarDirectly() {
-            document.getElementById('top-right-form-wrapper').classList.add('hidden');
-            const bookingContainer = document.getElementById('booking-container');
-            bookingContainer.classList.remove('hidden');
+        function handleFormSubmit(e) {
+            e.preventDefault();
 
-            const slot = document.getElementById('calendly-embed-slot');
-            slot.innerHTML = '';
+            const name = document.getElementById('user_name').value.trim();
+            const email = document.getElementById('user_email').value.trim();
+            const phone = document.getElementById('user_phone').value.trim();
+            let vertical = document.getElementById('user_vertical').value;
 
-            if (window.Calendly) {
-                Calendly.initInlineWidget({
-                    url: baseUrl,
-                    parentElement: slot
-                });
-            } else {
-                slot.innerHTML = `<div class="calendly-inline-widget" data-url="${baseUrl}" style="min-width:320px;height:650px;"></div>`;
+            if (vertical === 'Others') {
+                const customInd = document.getElementById('user_other_industry').value.trim();
+                vertical = customInd ? `Others (${customInd})` : 'Others';
             }
+
+            userData = { name, email, phone, vertical };
+
+            // Update Step 2 Header Pill
+            document.getElementById('summary-name').innerText = name;
+            document.getElementById('summary-contact').innerText = `${email} • ${phone}`;
+            document.getElementById('summary-vertical').innerText = vertical;
+
+            // Transition UI to Step 2 Custom Calendar
+            document.getElementById('top-right-form-wrapper').classList.add('hidden');
+            document.getElementById('booking-container').classList.remove('hidden');
+
+            renderCalendar();
         }
 
         function resetFormView() {
             document.getElementById('booking-container').classList.add('hidden');
             document.getElementById('top-right-form-wrapper').classList.remove('hidden');
+        }
+
+        function changeMonth(delta) {
+            currentMonth += delta;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            document.getElementById('calendar-month-label').innerText = `${monthNames[currentMonth]} ${currentYear}`;
+            const grid = document.getElementById('calendar-days-grid');
+            grid.innerHTML = '';
+
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay(); // 0 is Sun
+            // Shift for Mon start: Mon=0, Tue=1, Wed=2, Thu=3, Fri=4, Sat=5, Sun=6
+            const startOffset = (firstDay === 0) ? 6 : firstDay - 1;
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+            // Empty slots for offset
+            for (let i = 0; i < startOffset; i++) {
+                const empty = document.createElement('div');
+                empty.className = 'py-2';
+                grid.appendChild(empty);
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateObj = new Date(currentYear, currentMonth, day);
+                const dayOfWeek = dateObj.getDay(); // 5 = Friday
+                const isFriday = (dayOfWeek === 5);
+
+                const dayBtn = document.createElement('button');
+                dayBtn.type = 'button';
+                dayBtn.innerText = day;
+                dayBtn.className = `py-2 text-center rounded-lg border border-zinc-800 transition-all font-semibold ${
+                    isFriday 
+                    ? 'cal-day disabled border-red-950/40 text-red-700/60' 
+                    : 'bg-zinc-900 hover:border-blue-500 text-white cursor-pointer'
+                }`;
+
+                if (selectedDate && selectedDate.day === day && selectedDate.month === currentMonth && selectedDate.year === currentYear) {
+                    dayBtn.classList.add('selected');
+                }
+
+                if (isFriday) {
+                    dayBtn.title = 'Friday - Off Day';
+                } else {
+                    dayBtn.onclick = () => selectDate(day, currentMonth, currentYear, dayBtn);
+                }
+
+                grid.appendChild(dayBtn);
+            }
+        }
+
+        function selectDate(day, month, year, elem) {
+            document.querySelectorAll('.cal-day').forEach(b => b.classList.remove('selected'));
+            elem.classList.add('selected');
+
+            selectedDate = { day, month, year, formatted: `${monthNames[month]} ${day}, ${year}` };
+            document.getElementById('selected-date-label').innerText = `${monthNames[month]} ${day}`;
+
+            renderTimeSlots();
+        }
+
+        function renderTimeSlots() {
+            const slotsWrapper = document.getElementById('time-slots-wrapper');
+            slotsWrapper.classList.remove('hidden');
+
+            const nightContainer = document.getElementById('slots-night');
+            const dayContainer = document.getElementById('slots-day');
+            nightContainer.innerHTML = '';
+            dayContainer.innerHTML = '';
+
+            // Night slots: 12:00 AM to 3:00 AM
+            const nightSlots = ["12:00 AM", "12:30 AM", "01:00 AM", "01:30 AM", "02:00 AM", "02:30 AM", "03:00 AM"];
+            
+            // Afternoon/Morning slots: 03:00 PM to 11:30 AM (Spread across PM/AM shifts)
+            const daySlots = [
+                "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM", 
+                "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM", "08:00 PM", "08:30 PM", 
+                "09:00 PM", "09:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM",
+                "08:00 AM", "08:30 AM", "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM"
+            ];
+
+            nightSlots.forEach(time => {
+                const btn = createSlotButton(time);
+                nightContainer.appendChild(btn);
+            });
+
+            daySlots.forEach(time => {
+                const btn = createSlotButton(time);
+                dayContainer.appendChild(btn);
+            });
+        }
+
+        function createSlotButton(timeStr) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.innerText = timeStr;
+            btn.className = 'time-slot py-1.5 px-2 text-[11px] font-bold bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300 hover:border-blue-500 hover:text-white transition-all text-center';
+
+            if (selectedTime === timeStr) {
+                btn.classList.add('selected');
+            }
+
+            btn.onclick = () => {
+                document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedTime = timeStr;
+
+                // Enable Confirm Button
+                const confirmBtn = document.getElementById('confirm-booking-btn');
+                confirmBtn.removeAttribute('disabled');
+                confirmBtn.innerText = `Confirm Slot: ${selectedDate.formatted} @ ${selectedTime}`;
+                confirmBtn.className = 'w-full py-3.5 px-4 bg-gradient-to-r from-[#ff0500] to-red-700 hover:from-red-600 hover:to-red-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition-all shadow-[0_0_20px_rgba(255,5,0,0.4)] cursor-pointer';
+            };
+
+            return btn;
+        }
+
+        function confirmCustomBooking() {
+            if (!selectedDate || !selectedTime) return;
+
+            const payload = {
+                lead_name: userData.name,
+                lead_email: userData.email,
+                lead_phone: userData.phone,
+                vertical: userData.vertical,
+                booking_date: selectedDate.formatted,
+                booking_time: selectedTime,
+                target_destination: 'ikonischtech@gmail.com',
+                timestamp: new Date().toISOString()
+            };
+
+            // Dispatch notification payload to ikonischtech@gmail.com via FormSubmit API
+            try {
+                fetch('https://formsubmit.co/ajax/ikonischtech@gmail.com', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(() => {});
+            } catch (err) {}
+
+            // Open mailto backup trigger
+            const mailSubject = encodeURIComponent(`New Strategy Call Booking: ${userData.name} (${userData.vertical})`);
+            const mailBody = encodeURIComponent(`New Strategy Booking Details:\n\nName: ${userData.name}\nEmail: ${userData.email}\nPhone: ${userData.phone}\nVertical: ${userData.vertical}\nSelected Slot: ${selectedDate.formatted} @ ${selectedTime}`);
+            const mailUrl = `mailto:ikonischtech@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+            
+            const hiddenLink = document.createElement('a');
+            hiddenLink.href = mailUrl;
+            hiddenLink.target = '_blank';
+            document.body.appendChild(hiddenLink);
+            hiddenLink.click();
+            document.body.removeChild(hiddenLink);
+
+            // Render Confirmation Screen
+            document.getElementById('booking-container').classList.add('hidden');
+            document.getElementById('confirmation-container').classList.remove('hidden');
+
+            document.getElementById('conf-slot-time').innerText = `${selectedDate.formatted} @ ${selectedTime}`;
+            document.getElementById('conf-user-email').innerText = userData.email;
+        }
+
+        function downloadCalendarInvite() {
+            if (!selectedDate || !selectedTime) return;
+
+            const icsData = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//IKONISCH TECH//Strategy Session//EN',
+                'BEGIN:VEVENT',
+                `SUMMARY:IKÓNISCH TECH Strategy Call - ${userData.name}`,
+                `DESCRIPTION:Profit Leak Strategy Session with Lead RevOps Architect at IKÓNISCH TECH.\\nAttendee: ${userData.name}\\nPhone: ${userData.phone}`,
+                `LOCATION:Online Strategy Room`,
+                `STATUS:CONFIRMED`,
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\n');
+
+            const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.setAttribute('download', 'IkonischTech_Strategy_Call.ics');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function toggleFaq(btn) {
@@ -618,7 +959,7 @@
         /* RevOps Revenue Calculator Logic */
         let currentAvgVal = 15000;
 
-        function setCalcIndustry(ind, avgVal, defaultDrop) {
+        function setCalcIndustry(ind, avgVal) {
             document.querySelectorAll('.calc-ind-btn').forEach(btn => {
                 btn.classList.remove('active', 'border-red-500', 'bg-red-950/40', 'text-white');
                 btn.classList.add('border-zinc-800', 'bg-zinc-950', 'text-zinc-400');
@@ -644,7 +985,7 @@
             const leakedRevenue = leakedLeads * value;
             
             // Projected new revenue captured by automated RevOps intake
-            const capturedLeads = Math.round(leads * 0.15); // Estimated baseline conversion gain
+            const capturedLeads = Math.round(leads * 0.15); 
             const projectedRevenue = Math.max(leakedRevenue, capturedLeads * value);
 
             document.getElementById('out-leaked').innerText = `$${leakedRevenue.toLocaleString()} / mo`;
@@ -652,7 +993,9 @@
         }
 
         // Initialize calculator on page load
-        window.addEventListener('DOMContentLoaded', updateCalculator);
+        window.addEventListener('DOMContentLoaded', () => {
+            updateCalculator();
+        });
     </script>
 </body>
 </html>
